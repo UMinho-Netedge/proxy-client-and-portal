@@ -1,0 +1,38 @@
+version: "3"
+services:
+  client:
+    container_name: client
+    restart: always
+    depends_on: 
+      - mongodb_client
+    links:
+      - mongodb_client
+    image: uminhonetedge/proxy_client:latest
+    ports:
+      - "5005:5005"
+  mongodb_client:
+    image: mongo
+    command: mongod --port 27018
+    ports:
+        - 27018:27018
+    expose:
+      - 27018
+    container_name: mongodb_client
+    restart: always
+    volumes:
+      - ../data_client:/data/db
+  mongoexpress:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    expose:
+      - 8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb_client
+      ME_CONFIG_MONGODB_PORT: 27018
+    container_name: express
+    restart: always
+    volumes:
+      - ../data_client:/data/express
+volumes:
+ mongodb_client:
