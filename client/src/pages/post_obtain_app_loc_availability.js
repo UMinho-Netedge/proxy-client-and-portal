@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useOutputTextState, useShowOutputState } from '../stateHooks';
 
 export const Post_obtain_app_loc_availability = () => {
