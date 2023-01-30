@@ -3,10 +3,6 @@ import requests
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    return {"status":"ok"}
-
 @app.route("/callback_ref", methods=["POST"])
 def handle_post():
     data = request.get_json()
