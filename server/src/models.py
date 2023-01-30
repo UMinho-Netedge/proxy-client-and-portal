@@ -118,7 +118,14 @@ class  AppLocationAvailabilityNotification:
         locations = data.pop("availableLocations")
         for al in locations:
             al = AppLocation.from_json(al)
+<<<<<<< HEAD
+            availableLocations.append(al)
+        loc = {}
+        loc["appLocation"] = vars(al.appLocation)
+        data["availableLocations"] = loc
+=======
         data["availableLocations"] = object_to_mongodb_dict(al.to_json())
+>>>>>>> 9d05aec73e18cee5d77099e37fcdb365a5c11326
         validate(instance=data, schema=applicationLocationAvailabilityNotification_schema)
         contextId = data.get("contextId")
         notificationType = data.get("notificationType") 

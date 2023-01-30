@@ -10,9 +10,18 @@ services:
     image: uminhonetedge/proxy_client:latest
     ports:
       - "5005:5005"
+<<<<<<< HEAD
     networks:
       - mynetwork
 
+=======
+<<<<<<< HEAD
+    networks:
+      - mynetwork
+
+=======
+>>>>>>> 9d05aec73e18cee5d77099e37fcdb365a5c11326
+>>>>>>> af5a6e36f88ddff67e108c1c921eb49300f11f17
   mongodb_client:
     image: mongo
     command: mongod --port 27018
@@ -24,9 +33,18 @@ services:
     restart: always
     volumes:
       - ../data_client:/data/db
+<<<<<<< HEAD
     networks:
       - mynetwork
 
+=======
+<<<<<<< HEAD
+    networks:
+      - mynetwork
+
+=======
+>>>>>>> 9d05aec73e18cee5d77099e37fcdb365a5c11326
+>>>>>>> af5a6e36f88ddff67e108c1c921eb49300f11f17
   mongoexpress:
     image: mongo-express
     ports:
@@ -40,6 +58,10 @@ services:
     restart: always
     volumes:
       - ../data_client:/data/express
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> af5a6e36f88ddff67e108c1c921eb49300f11f17
     networks:
       - mynetwork
 
@@ -47,4 +69,12 @@ volumes:
  mongodb_client:
 
 networks:
+<<<<<<< HEAD
   mynetwork:
+=======
+  mynetwork:
+=======
+volumes:
+ mongodb_client:
+>>>>>>> 9d05aec73e18cee5d77099e37fcdb365a5c11326
+>>>>>>> af5a6e36f88ddff67e108c1c921eb49300f11f17
