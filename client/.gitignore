@@ -2,10 +2,6 @@
 
 # dependencies
 /node_modules
-<<<<<<< HEAD
-/package.json
-=======
->>>>>>> 9d05aec73e18cee5d77099e37fcdb365a5c11326
 /.pnp
 .pnp.js
 
