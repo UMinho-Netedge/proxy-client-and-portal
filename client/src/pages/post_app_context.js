@@ -4,36 +4,36 @@ import axios from 'axios';
 
 export const Post_app_context = () => {
 
-    const [showOutput, setShowOutput] = useShowOutputState();
-    const [inputValue, setInputValue] = useState("");
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
 
-    function handleOutput() {
-        setShowOutput(!showOutput);
-      }
+    const handleSubmit = async event => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = {
+            body: formData.get("body")
+    };
 
-    function handleSubmit() {
-            axios.post("http://127.0.0.1:5001/app_contexts", {
-            body: JSON.stringify(inputValue)
-            })
-            .then(function (response) {
-                setInputValue(response.data);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-        }
+    try {
+      const response = await axios.post("http://127.0.0.1:5001/app_contexts", data);
+      setResponse(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  };
 
+  if (error) return <div>An error occurred: {error.message}</div>;
+  if (response) return <pre>{JSON.stringify(response, null, 2)}</pre>;
 
-
-    return (
-        <div>
-            <input className="url" placeholder="http://127.0.0.1:5001/app_contexts" type="text"/>        
-                <div className="request_body">
-                    <textarea id="textarea" placeholder="Request Body"
-                        type="text" value={inputValue}/>
-                </div>
-                <button type="submit" onClick={() => {handleOutput(); handleSubmit()}}> Submit </button>
-                {showOutput ? ( inputValue && <p>{JSON.stringify(inputValue)}</p>) : null}
-        </div>
-    )
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="body" placeholder="http://127.0.0.1:5001/app_contexts" />
+      <button type="submit">Submit</button>
+    </form>
+  );
 }
+
+export default Post_app_context;
+
+
+

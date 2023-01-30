@@ -10,6 +10,9 @@ services:
     image: uminhonetedge/proxy_client:latest
     ports:
       - "5005:5005"
+    networks:
+      - mynetwork
+
   mongodb_client:
     image: mongo
     command: mongod --port 27018
@@ -21,6 +24,9 @@ services:
     restart: always
     volumes:
       - ../data_client:/data/db
+    networks:
+      - mynetwork
+
   mongoexpress:
     image: mongo-express
     ports:
@@ -34,5 +40,11 @@ services:
     restart: always
     volumes:
       - ../data_client:/data/express
+    networks:
+      - mynetwork
+
 volumes:
  mongodb_client:
+
+networks:
+  mynetwork:

@@ -1,13 +1,14 @@
 from flask import Flask, request
 import requests
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route("/callback_ref", methods=["POST"])
+@app.route("/app_contexts", methods=["POST"])
 def handle_post():
-    data = request.get_json()
-    response = requests.post("http://127.0.0.1:5005/callback_ref", json=data)
-    return {"code":"code"}, response.status_code
+    body = request.get_json()
+    return body
 
 if __name__ == '__main__':
-    app.run(host = "0.0.0.0", port = 5002, debug = True)
+    app.run(host = "0.0.0.0", port = 5001, debug = True)
