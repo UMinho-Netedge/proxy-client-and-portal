@@ -6,6 +6,12 @@ export const Post_app_context = () => {
 
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
+    const [showOutput, setShowOutput] = useShowOutputState();
+
+    
+    function handleOutput() {
+        setShowOutput(!showOutput);
+      }
 
     const handleSubmit = async event => {
         event.preventDefault();
