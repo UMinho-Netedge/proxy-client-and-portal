@@ -4,21 +4,21 @@ import axios from 'axios';
 
 export const Post_app_context = () => {
 
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
-    const [showOutput, setShowOutput] = useShowOutputState();
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
+  const [showOutput, setShowOutput] = useShowOutputState();
 
-    
-    function handleOutput() {
-        setShowOutput(!showOutput);
-      }
+  
+  function handleOutput() {
+      setShowOutput(!showOutput);
+    }
 
-    const handleSubmit = async event => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const data = {
-            body: formData.get("body")
-    };
+  const handleSubmit = async event => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const data = {
+          body: formData.get("body")
+  };
 
     try {
       const response = await axios.post("http://127.0.0.1:8080/app_contexts", data);
@@ -29,17 +29,15 @@ export const Post_app_context = () => {
   };
 
   if (error) return <div>An error occurred: {error.message}</div>;
-  if (response) return <pre>{JSON.stringify(response, null, 2)}</pre>;
+  if (response) return <pre>{JSON.stringify(response)}</pre>;
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="body" placeholder="http://127.0.0.1:5001/app_contexts" />
+      <input type="text" name="body" placeholder="http://127.0.0.1:8080/app_contexts" />
       <button type="submit">Submit</button>
     </form>
   );
 }
 
 export default Post_app_context;
-
-
 
