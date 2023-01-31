@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export const useOutputTextState = () => {
-    const [outputText, setOutputText] = useState("outputText");
+    const [outputText, setOutputText] = useState(null);
     return [outputText, setOutputText];
 }
 
@@ -18,4 +18,9 @@ export const useButtonTextState = () => {
 export const useShowOutputState = () => {
     const [showOutput, setShowOutput] = useState(false);
     return [showOutput, setShowOutput];
+}
+
+export const useDisableClickState = () => {
+    const [clicked, setClicked] = useState(false);
+    return [clicked, setClicked];
 }

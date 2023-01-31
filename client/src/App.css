@@ -56,6 +56,11 @@ p {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  width: 350px;
+}
+
+p[name="url"] {
+  width: 400px;
 }
 
 textarea {

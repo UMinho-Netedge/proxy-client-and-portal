@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import {useShowOutputState } from '../stateHooks';
+import {useShowOutputState, useOutputTextState, useDisableClickState } from '../stateHooks';
 import axios from 'axios';
 
 export const Post_app_context = () => {
 
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
+    const [outputText, setOutputText] = useOutputTextState();
     const [showOutput, setShowOutput] = useShowOutputState();
+    //const [clicked, setClicked] = useDisableClickState();
+    const url = "http://127.0.0.1:5001/app_contexts"
 
     
-    function handleOutput() {
-        setShowOutput(!showOutput);
-      }
+    const handleOutput = () => {
+      setShowOutput(!showOutput);
+    };
+    
+      // const handleClick = () => {
+      //   setClicked(true);
+      // };
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -21,25 +26,25 @@ export const Post_app_context = () => {
     };
 
     try {
-      const response = await axios.post("http://127.0.0.1:8080/app_contexts", data);
-      setResponse(response.data);
+      const outputText = await axios.post(url, data);
+      setOutputText(outputText.data);
     } catch (error) {
-      setError(error);
+      console.log("error");
     }
   };
 
-  if (error) return <div>An error occurred: {error.message}</div>;
-  if (response) return <pre>{JSON.stringify(response, null, 2)}</pre>;
+    //adicionar disabled={clicked} no button
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="body" placeholder="http://127.0.0.1:5001/app_contexts" />
-      <button type="submit">Submit</button>
+      <p name="url">Sending to {url}</p>      
+      <textarea type="text" name="body" placeholder="Insert the request body" />
+      <button type="submit" onClick={handleOutput}>Submit</button>
+      {showOutput ? ( <p>{JSON.stringify(outputText, null, 10)}</p>) : null}
     </form>
   );
 }
 
-export default Post_app_context;
 
 
 

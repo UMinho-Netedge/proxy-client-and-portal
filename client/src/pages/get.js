@@ -1,4 +1,7 @@
 import { useOutputTextState, useIsOpenState, useButtonTextState, useShowOutputState } from '../stateHooks';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+
 
 export const Get = () => {
 
@@ -15,10 +18,23 @@ export const Get = () => {
         setButtonText(buttonText === "Show more searching options" ? "Hide searching options" : "Show more searching options");
       }
 
-      function handleOutput() {
+    function handleOutput() {
         setShowOutput(!showOutput);
       }
     
+    
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get("http://127.0.0.1:5001/app_list");
+            setOutputText(response.outputText);
+          } catch (error) {
+            console.log("error")
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     return (
         <div>

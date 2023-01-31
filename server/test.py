@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/app_contexts", methods=["POST"])
+@app.route("/app_contexts/deleteTest", methods=["PUT"])
 def handle_post():
     body = request.get_json()
     return body
