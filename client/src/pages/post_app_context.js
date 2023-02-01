@@ -41,8 +41,10 @@ export const Post_app_context = () => {
     <form onSubmit={handleSubmit}>
       <p name="url">Sending to {url}</p>      
       <textarea type="text" name="body" placeholder="Insert the request body" />
+      <div className="column">
       <button type="submit" onClick={handleOutput}>Submit</button>
       {showOutput ? ( <p>{JSON.stringify(outputText, null, 10)}</p>) : null}
+      </div>
     </form>
   );
 }

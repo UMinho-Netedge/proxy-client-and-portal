@@ -36,10 +36,14 @@ export const Put = () => {
     return (
         <form onSubmit={handleSubmit}>
           <p name="url">Sending to http://127.0.0.1:8080/app_contexts/{input}</p>  
-          <input placeholder="contextId" name="contextId" type="text" value={input} onChange={handleChange}/>    
+          <div className="column">
+            <input placeholder="contextId" name="contextId" type="text" value={input} onChange={handleChange}/>    
+          </div>
           <textarea type="text" name="body" placeholder="Insert the request body" />
-          <button type="submit" onClick={handleOutput}>Submit</button>
-          {showOutput ? ( <p>{JSON.stringify(outputText, null, 10)}</p>) : null}
+          <div className="column">
+            <button type="submit" onClick={handleOutput}>Submit</button>
+            {showOutput ? ( <p>{JSON.stringify(outputText, null, 10)}</p>) : null}
+          </div>
         </form>
       );
 };
