@@ -21,13 +21,17 @@ export const Post_app_context = () => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = JSON.parse(formData.get("body"));
-
+    
+    const outputText = await axios.post(url, data);
+    setOutputText(outputText.status);
+    /*
     try {
       const outputText = await axios.post(url, data);
-      setOutputText(outputText.data);
+      setOutputText(outputText.status);
     } catch (error) {
-      setOutputText(outputText);
-    }
+      setOutputText(outputText.status);
+    }*/
+
   };
 
     //adicionar disabled={clicked} no button
@@ -37,7 +41,7 @@ export const Post_app_context = () => {
       <p name="url">Sending to {url}</p>      
       <textarea type="text" name="body" placeholder="Insert the request body" />
       <button type="submit" onClick={handleOutput}>Submit</button>
-      {showOutput ? ( <p>{JSON.stringify(outputText, null, 10)}</p>) : null}
+      {showOutput ? ( <p>{JSON.stringify(outputText)}</p>) : null}
     </form>
   );
 }
