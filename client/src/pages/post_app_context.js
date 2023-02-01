@@ -9,6 +9,7 @@ export const Post_app_context = () => {
     //const [clicked, setClicked] = useDisableClickState();
     const url = "http://127.0.0.1:8080/app_contexts"
 
+    
     const handleOutput = () => {
       setShowOutput(!showOutput);
     };
@@ -40,8 +41,10 @@ export const Post_app_context = () => {
     <form onSubmit={handleSubmit}>
       <p name="url">Sending to {url}</p>      
       <textarea type="text" name="body" placeholder="Insert the request body" />
+      <div className="column">
       <button type="submit" onClick={handleOutput}>Submit</button>
-      {showOutput ? ( <p>{JSON.stringify(outputText)}</p>) : null}
+      {showOutput ? ( <p>{JSON.stringify(outputText, null, 10)}</p>) : null}
+      </div>
     </form>
   );
 }
