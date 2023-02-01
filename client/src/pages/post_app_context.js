@@ -23,6 +23,7 @@ export const Post_app_context = () => {
         const formData = new FormData(event.target);
         const data = {
             body: formData.get("body")
+            
     };
 
     try {
