@@ -16,7 +16,7 @@ def handle_post():
     data = request.get_json()
     return data
 
-@app.route("/app_contexts/deleteTest", methods=["PUT", "POST", "OPTIONS"])
+@app.route("/app_contexts/string", methods=["DELETE, PUT", "POST", "OPTIONS"])
 def app_contexts():
     if request.method == "OPTIONS":
         response = jsonify({})
