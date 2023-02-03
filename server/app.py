@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 import requests
 from pymongo import MongoClient
 from src.schemas import *
@@ -15,6 +15,7 @@ AddressChange = db["AddressChange"]
 AppContextDelete = db["AppContextDelete"]
 AppContextUpdate = db["AppContextUpdate"]
 AppLocationAvailability = db["AppLocationAvailability"]
+log_request = db['log_request']
 
 CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
 
@@ -26,12 +27,21 @@ def test_connection():
     except:
         return 500
 
-requests_log = []
+requests = []
+
+@app.before_request
+def def_log_request():
+    # Log the request information
+   log_request.insert_one({
+        'method': request.method,
+        'url': request.url,
+        'headers': dict(request.headers),
+        'body': request.get_data().decode('utf-8'),
+    })
 
 @app.route('/callback_ref', methods=['POST'])
 def notifications():
     body = request.get_json()
-    requests_log.append(request)
     try: 
         if body["notificationType"] == "AddressChangeNotification":
             data = AddressChangeNotification.from_json(body)
@@ -57,7 +67,13 @@ def notifications():
 
 @app.route('/notifications', methods=['GET'])
 def last_request():
-    return str(requests_log[0])
+    try:
+        myquery = { "method": "POST" }
+        last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
+        last_request['_id'] = str(last_request['_id'])
+        return jsonify(last_request)
+    except:
+        return jsonify("Not yet!")
 
 @app.errorhandler(400)
 def page_not_found(e):
