@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 export const Get = () => {
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useIsOpenState();
   const [buttonText, setButtonText] = useButtonTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
@@ -37,18 +37,24 @@ export const Get = () => {
     serviceCont: serviceCont
   };
 
-  let params = {};
+  let parValue = {};
   for (let key in parameters) {
-    if (parameters[key] != "") {
-      params[key] = parameters[key];
+    if (parameters[key] !== "") {
+      parValue[key] = parameters[key];
   }
   }
 
   useEffect(() => {
-    axios.get(url,{params})
-      .then(response => setOutputText(response.status), response => setResponseData(response.status))
-      .catch(error => setOutputText(error.response.status), error => setResponseData(JSON.stringify(error.response.data)));
-  });
+    axios.get(url, {params: parValue})
+      .then(response => {
+        setOutputText(response.status);
+        setResponseData(response.data);
+      })
+      .catch(error => {
+        setOutputText(error.response.status);
+        setResponseData(typeof error.response.data === 'object' ? JSON.stringify(error.response.data) : error.response.data);
+      });
+  }, []);
   
   return (
     <div>
