@@ -23,6 +23,7 @@ export const Post_app_context = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = JSON.parse(formData.get("body"));
+    
     try {
       const outputText = await axios.post(url, data);
       setResponseData(JSON.stringify(outputText.data));

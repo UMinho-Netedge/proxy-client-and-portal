@@ -1,54 +1,50 @@
 import React, { useState } from 'react';
-import { useOutputTextState, useShowOutputState } from '../stateHooks';
+import {useShowOutputState, useOutputTextState, useDisableClickState } from '../stateHooks';
 import axios from 'axios';
 
 export const Post_obtain_app_loc_availability = () => {
 
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
-    const [showOutput, setShowOutput] = useShowOutputState();
+  const [responseData, setResponseData] = useState("");
+  const [outputText, setOutputText] = useOutputTextState();
+  const [showOutput, setShowOutput] = useShowOutputState();
+  //const [clicked, setClicked] = useDisableClickState();
+  const url = "http://127.0.0.1:8080/obtain_app_loc_availability"
+  
+  const handleOutput = () => {
+    setShowOutput(!showOutput);
+  };
+  
+    // const handleClick = () => {
+    //   setClicked(true);
+    // };
 
-    
-    function handleOutput() {
-        setShowOutput(!showOutput);
-      }
-
-    const handleSubmit = async event => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const data = {
-            body: formData.get("body")
-    };
+  const handleSubmit = async event => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = JSON.parse(formData.get("body"));
 
     try {
-      const response = await axios.post("http://127.0.0.1:5001/application_location_availability", data);
-      setResponse(response.data);
+      const outputText = await axios.post(url, data);
+      setResponseData(JSON.stringify(outputText.data));
+      setOutputText(outputText.status);
     } catch (error) {
-      setError(error);
+      setResponseData(JSON.stringify(error.response.data));
+      setOutputText(error.response.status)
     }
   };
 
-  if (error) return <div>An error occurred: {error.message}</div>;
-  if (response) return <pre>{JSON.stringify(response, null, 2)}</pre>;
+    //adicionar disabled={clicked} no button
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="body" placeholder="http://127.0.0.1:5001/application_location_availability" />
-      <button type="submit">Submit</button>
+      <p name="url">Sending to {url}</p>      
+      <textarea type="text" name="body" placeholder="Insert the request body" />
+      <div className="column">
+      <button type="submit" onClick={handleOutput}>Submit</button>
+      <p>Response status: {outputText}</p>
+      <h4>Body</h4>
+      <textarea value={responseData} readOnly />
+      </div>
     </form>
   );
 }
-
-
-
-    // return (
-    //     <div>
-    //         <input className="url" placeholder="http://127.0.0.1:8080/obtain_app_loc_availability" type="text"/>            
-    //         <div className="request_body">
-    //             <textarea id="textarea" placeholder="Request Body" type="text"  />
-    //         </div>
-    //         <button onClick={handleOutput}> Submit </button>
-    //         {showOutput ? (
-    //         <p>{outputText}</p>) : null}
-    //     </div>
-    // )
