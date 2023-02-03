@@ -2,7 +2,6 @@ import { useOutputTextState, useIsOpenState, useButtonTextState, useShowOutputSt
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-
 export const Get = () => {
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
@@ -41,7 +40,7 @@ export const Get = () => {
   for (let key in parameters) {
     if (parameters[key] !== "") {
       parValue[key] = parameters[key];
-  }
+    }
   }
 
   useEffect(() => {

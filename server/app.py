@@ -26,30 +26,25 @@ def test_connection():
     except:
         return 500
 
-def send_notification_to_react(response):
-    react_app_url = "http://localhost:3000/notifications"
-    requests.post(react_app_url, json=response)
+requests_log = []
 
-@app.route('/callback_ref', methods=["GET",'POST'])
+@app.route('/callback_ref', methods=['POST'])
 def notifications():
     body = request.get_json()
+    requests_log.append(request)
     try: 
         if body["notificationType"] == "AddressChangeNotification":
             data = AddressChangeNotification.from_json(body)
-            AddressChange.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
+            AddressChange.insert_one(object_to_mongodb_dict(data.to_json()))  
         elif body["notificationType"] == "AppContextDeleteNotification":
             data = AppContextDeleteNotification.from_json(body)
             AppContextDelete.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
         elif body["notificationType"] == "AppContextUpdateNotification":
             data = AppContextUpdateNotification.from_json(body)
             AppContextUpdate.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
         elif body["notificationType"] == "AppLocationAvailabilityNotification":
             data = AppLocationAvailabilityNotification.from_json(body)
             AppLocationAvailability.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
         else:
             msg = "Notification type not valid!"
             return Error.error_400(msg)
@@ -60,7 +55,10 @@ def notifications():
             msg = "Request body not valid, jsonschema.exceptions.ValidationError"
             return Error.error_400(msg)
 
-    
+@app.route('/notifications', methods=['GET'])
+def last_request():
+    return str(requests_log[0])
+
 @app.errorhandler(400)
 def page_not_found(e):
     msg = "No request parameters found, request Content-Type was not {application/json}"
