@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
 
 export const Get = () => {
   const [responseData, setResponseData] = useState("");
@@ -34,12 +33,12 @@ export const Get = () => {
       serviceCont: serviceCont
     };
 
-  let parValue = {};
-  for (let key in parameters) {
-    if (parameters[key] !== "") {
-      parValue[key] = parameters[key];
+    let parValue = {};
+    for (let key in parameters) {
+      if (parameters[key] !== "") {
+        parValue[key] = parameters[key];
+      }
     }
-  }
 
     axios.get(url, { params: parValue })
       .then(response => {
