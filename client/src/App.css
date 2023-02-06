@@ -15,6 +15,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .navbar .links {
@@ -38,11 +39,11 @@ textarea, p {
 
 input, textarea, p {
   padding: 8px 30px;
-  margin: 30px 8px 16px 8px;
-  background-color: rgba(222, 239, 248, 0.877);
+  margin:0px 8px 16px 8px;
+  background-color: rgba(255,255,255);
   border: 0px transparent;
   border-radius: 5px;
-  color: rgba( 0, 0, 128, 1 );
+  color: rgb(70, 70, 70);
   font-size: 16px;
   z-index: 1;
   width: 250px;
@@ -57,6 +58,7 @@ p {
   margin-left: auto;
   margin-right: auto;
   width: 350px;
+  margin-bottom: 20px;
 }
 
 p[name="url"] {
@@ -77,9 +79,96 @@ textarea {
 
 button {
   border-radius: 8px;
-  border: 2px solid rgba( 70, 130, 180, 1 );
-  background-color: rgba( 173, 216, 230, 1 );
   font-family: "Nunito", sans-serif;
-  margin: 8px 8px 8px 8px;
+  margin: 8px 8px 16px 8px;
   cursor: pointer;
+  border: 2px solid rgb(0, 0, 0);
 }
+
+.button_get{
+  background-color: rgba( 173, 216, 230, 1 );
+}
+
+.button_post{
+  background-color: rgb(113, 210, 139);
+}
+
+.button_put{
+  background-color: rgb(255, 205, 111);
+}
+
+.button_delete{
+  background-color: rgb(255, 111, 111);
+}
+
+.get, .post, .put, .delete{
+  margin-top: 20px;
+  width: 100vh;
+  height: auto;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+  border-radius: 30px 30px 30px 30px;
+  margin-bottom: 20px;
+}
+
+.get{
+  background-color: rgb(220, 241, 255);
+  border: 2px solid rgba( 70, 130, 180, 1 );
+}
+
+.post{
+  background-color: rgb(200, 233, 214);
+  border: 2px solid rgb(24, 155, 87);
+}
+
+.put{
+  background-color: rgb(255, 230, 187);
+  border: 2px solid rgb(224, 153, 20);
+}
+
+.delete{
+  background-color: rgb(255, 192, 192);
+  border: 2px solid rgb(176, 46, 46);
+}
+
+
+.sub_get, .sub_post, .sub_put, .sub_delete{
+  margin-top: 20px;
+  width: 80vh;
+  height: auto;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+  border-radius: 30px 30px 30px 30px;
+  margin-bottom: 20px;
+}
+
+.sub_get{
+  background-color: rgba( 70, 130, 180, 1 );
+  border: 2px solid rgb(139, 213, 255);
+}
+
+.sub_post{
+  background-color: rgb(34, 151, 91);
+  border: 2px solid rgb(182, 255, 210);
+}
+
+.sub_put{
+  background-color: rgb(224, 153, 20);
+  border: 2px solid rgb(255, 217, 120);
+}
+
+.sub_delete{
+  background-color: rgb(176, 46, 46);
+  border: 2px solid rgb(253, 98, 98);
+}
+
+.url{
+  margin-top: 20px;
+}
+
+
+

@@ -52,12 +52,14 @@ export const Get = () => {
   }
 
   return (
-    <div>
+    <div className="get">
+    <h2>Get App List</h2>
       <p name="url">Sending to {url}</p>
       <div className="parameters">
-        <button onClick={() => { handleClick(); handleToggle() }}>{buttonText}</button>
+        <button className='button_get' onClick={() => { handleClick(); handleToggle() }}>{buttonText}</button>
         {isOpen ? (
           <div>
+            <h4>Parameters</h4>
             <div className="column">
               <input placeholder="appName" type="text" value={appName} onChange={e => setAppName(e.target.value)} />
               <input placeholder="appProvider" type="text" value={appProvider} onChange={e => setAppProvider(e.target.value)} />
@@ -70,10 +72,13 @@ export const Get = () => {
           </div>
           ) : null}
       </div>
-      <button onClick={handleOutput}> Submit </button>
+      <button className='button_get' onClick={handleOutput}> Submit </button>
+      <div className='sub_get'>
+      <h4>Status</h4>
       <p>Response status: {outputText}</p>
       <h4>Body</h4>
       <textarea value={responseData} readOnly />
+      </div>
     </div>
   )
 }

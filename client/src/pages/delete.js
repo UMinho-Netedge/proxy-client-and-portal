@@ -31,17 +31,24 @@ export const Delete = () => {
     };
 
     return (
+      <div className="delete">
+      <h2>Delete App Context</h2>
         <form onSubmit={handleDelete}>
           <p name="url">Sending to http://127.0.0.1:8080/app_contexts/{input}</p>  
           <div className="column">
+          <h4>Parameter</h4>
             <input placeholder="contextId" name="contextId" type="text" value={input} onChange={handleChange}/>    
           </div>
           <div className="column">
-            <button type="submit" onClick={handleOutput}>Submit</button>
+            <button className='button_delete' type="submit" onClick={handleOutput}>Submit</button>
+            <div className='sub_delete'>
+            <h4>Status</h4>
             <p>Response status: {outputText}</p>
             <h4>Body</h4>
             <textarea value={responseData} readOnly />
+            </div>
           </div>
         </form>
+        </div>
       );
 };

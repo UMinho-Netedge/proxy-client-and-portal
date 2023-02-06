@@ -36,15 +36,22 @@ export const Post_obtain_app_loc_availability = () => {
     //adicionar disabled={clicked} no button
 
   return (
+    <div className="post">
+    <h2>Post App Location Availability</h2>
     <form onSubmit={handleSubmit}>
-      <p name="url">Sending to {url}</p>      
+      <p name="url">Sending to {url}</p>    
+      <h4>Request Body</h4>  
       <textarea type="text" name="body" placeholder="Insert the request body" />
       <div className="column">
-      <button type="submit" onClick={handleOutput}>Submit</button>
+      <button className='button_post' type="submit" onClick={handleOutput}>Submit</button>
+      <div className='sub_post'>
+      <h4>Status</h4>
       <p>Response status: {outputText}</p>
       <h4>Body</h4>
       <textarea value={responseData} readOnly />
       </div>
+      </div>
     </form>
+    </div>
   );
 }

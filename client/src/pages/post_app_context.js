@@ -27,17 +27,25 @@ export const Post_app_context = () => {
     }
   };
 
+
   return (
-    <form onSubmit={handleSubmit}>
-      <p name="url">Sending to {url}</p>      
-      <textarea type="text" name="body" placeholder="Insert the request body" />
-      <div className="column">
-      <button type="submit" onClick={handleOutput}>Submit</button>
-      <p>Response status: {outputText}</p>
-      <h4>Body</h4>
-      <textarea value={responseData} readOnly />
-      </div>
-    </form>
+    <div className="post">
+      <h2>Post App Context</h2>
+      <form onSubmit={handleSubmit}>
+        <p className="url">Sending to {url}</p>   
+        <h4>Request Body</h4>   
+        <textarea type="text" name="body" placeholder="Insert the request body" />
+        <div className="column">
+        <button className='button_post' type="submit" onClick={handleOutput}>Submit</button>
+        <div className='sub_post'>
+        <h4>Status</h4>
+        <p>Response status: {outputText}</p>
+        <h4>Body</h4>
+        <textarea value={responseData} readOnly />
+        </div>
+        </div>
+      </form>
+    </div>
   );
 }
 
