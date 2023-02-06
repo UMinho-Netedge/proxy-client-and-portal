@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 import requests
 from pymongo import MongoClient
 from src.schemas import *
@@ -15,6 +15,7 @@ AddressChange = db["AddressChange"]
 AppContextDelete = db["AppContextDelete"]
 AppContextUpdate = db["AppContextUpdate"]
 AppLocationAvailability = db["AppLocationAvailability"]
+log_request = db['log_request']
 
 CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
 
@@ -26,30 +27,34 @@ def test_connection():
     except:
         return 500
 
-def send_notification_to_react(response):
-    react_app_url = "http://localhost:3000/notifications"
-    requests.post(react_app_url, json=response)
+requests = []
 
-@app.route('/callback_ref', methods=["GET",'POST'])
+@app.before_request
+def def_log_request():
+    # Log the request information
+   log_request.insert_one({
+        'method': request.method,
+        'url': request.url,
+        'headers': dict(request.headers),
+        'body': request.get_data().decode('utf-8'),
+    })
+
+@app.route('/callback_ref', methods=['POST'])
 def notifications():
     body = request.get_json()
     try: 
         if body["notificationType"] == "AddressChangeNotification":
             data = AddressChangeNotification.from_json(body)
-            AddressChange.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
+            AddressChange.insert_one(object_to_mongodb_dict(data.to_json()))  
         elif body["notificationType"] == "AppContextDeleteNotification":
             data = AppContextDeleteNotification.from_json(body)
             AppContextDelete.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
         elif body["notificationType"] == "AppContextUpdateNotification":
             data = AppContextUpdateNotification.from_json(body)
             AppContextUpdate.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
         elif body["notificationType"] == "AppLocationAvailabilityNotification":
             data = AppLocationAvailabilityNotification.from_json(body)
             AppLocationAvailability.insert_one(object_to_mongodb_dict(data.to_json()))
-            send_notification_to_react(object_to_mongodb_dict(data.to_json()))
         else:
             msg = "Notification type not valid!"
             return Error.error_400(msg)
@@ -60,7 +65,16 @@ def notifications():
             msg = "Request body not valid, jsonschema.exceptions.ValidationError"
             return Error.error_400(msg)
 
-    
+@app.route('/notifications', methods=['GET'])
+def last_request():
+    try:
+        myquery = { "method": "POST" }
+        last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
+        last_request['_id'] = str(last_request['_id'])
+        return jsonify(last_request)
+    except:
+        return jsonify("Not yet!")
+
 @app.errorhandler(400)
 def page_not_found(e):
     msg = "No request parameters found, request Content-Type was not {application/json}"

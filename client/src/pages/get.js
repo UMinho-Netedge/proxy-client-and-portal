@@ -43,7 +43,7 @@ export const Get = () => {
     axios.get(url, { params: parValue })
       .then(response => {
         setOutputText(response.status);
-        setResponseData(response.data);
+        setResponseData(JSON.stringify(response.data));
       })
       .catch(error => {
         setOutputText(error.response.status);
