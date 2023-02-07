@@ -20,9 +20,13 @@ export const Notifications = () => {
 
     return (
     <div>
+        <div className="notifications">
+        <h2>Notifications</h2>
+        <h4>Status</h4>
         <p>Response status: {outputText}</p>
         <h4>Body</h4>
         <textarea value={responseData} readOnly />
+        </div>
     </div>
     );
 };

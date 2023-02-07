@@ -11,7 +11,7 @@ body {
 .navbar {
   width: 100%;
   height: 80px;
-  background-color: rgba( 70, 130, 180, 1 );
+  background-color: rgb(192, 192, 192);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,10 +24,38 @@ body {
   cursor: pointer;
 }
 
-.links a {
-  color: white;
-  text-decoration: none;
+.navbar a:focus {
+  color: rgb(255,255,255);
   border-bottom: 3px solid white;
+}
+
+.get_link:hover {
+  color: rgb(62, 139, 202);
+  font-weight: bold;
+}
+
+.post_link:hover {
+  color: rgb(67, 175, 96);
+  font-weight: bold;
+}
+
+.put_link:hover {
+  color: rgb(245, 138, 24);
+  font-weight: bold;
+}
+
+.delete_link:hover {
+  color: rgb(195, 38, 38);
+  font-weight: bold;
+}
+
+.notifications_link:hover {
+  font-weight: bold;
+}
+
+.links a {
+  color: black;
+  text-decoration: none;
   padding-bottom: 2px;
   margin: 10px;
 }
@@ -46,7 +74,7 @@ input, textarea, p {
   color: rgb(70, 70, 70);
   font-size: 16px;
   z-index: 1;
-  width: 250px;
+  width: 400px;
   text-align: center;
 }
 
@@ -57,12 +85,8 @@ p {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  width: 350px;
-  margin-bottom: 20px;
-}
-
-p[name="url"] {
   width: 400px;
+  margin-bottom: 20px;
 }
 
 textarea {
@@ -101,9 +125,9 @@ button {
   background-color: rgb(255, 111, 111);
 }
 
-.get, .post, .put, .delete{
+.get, .post, .put, .delete, .notifications{
   margin-top: 20px;
-  width: 100vh;
+  width: 150vh;
   height: auto;
   flex-direction: column;
   align-items: center;
@@ -133,10 +157,15 @@ button {
   border: 2px solid rgb(176, 46, 46);
 }
 
+.notifications{
+  background-color: rgb(191, 191, 191);
+  border: 2px solid rgb(0, 0, 0);
+}
+
 
 .sub_get, .sub_post, .sub_put, .sub_delete{
   margin-top: 20px;
-  width: 80vh;
+  width: 120vh;
   height: auto;
   flex-direction: column;
   align-items: center;

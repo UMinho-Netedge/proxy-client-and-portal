@@ -10,6 +10,15 @@ import { Put } from './pages/put';
 import { Post_obtain_app_loc_availability } from './pages/post_obtain_app_loc_availability';
 import { Notifications } from './pages/notifications';
 
+function Home() {
+  if (window.location.pathname === "/") {
+    return (
+    <p>Hello</p>
+    )
+  }
+  return null;
+}
+
 function App() {
 
   return (
@@ -17,6 +26,7 @@ function App() {
       <Router> 
         <Navbar/>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/get" element={<Get/>}/>
           <Route path="/post_app_context" element={<Post_app_context/>}/>
           <Route path="/put" element={<Put/>}/>
@@ -26,6 +36,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+    
   );
   };
 
