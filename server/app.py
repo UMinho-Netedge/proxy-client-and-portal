@@ -15,10 +15,20 @@ AddressChange = db["AddressChange"]
 AppContextDelete = db["AppContextDelete"]
 AppContextUpdate = db["AppContextUpdate"]
 AppLocationAvailability = db["AppLocationAvailability"]
+ContextId = db["ContextId"]
 log_request = db['log_request']
 
 CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
 
+@app.before_request
+def def_log_request():
+   log_request.insert_one({
+        'method': request.method,
+        'url': request.url,
+        'headers': dict(request.headers),
+        'body': request.get_data().decode('utf-8'),
+    })
+    
 @app.route('/ping', methods=['GET'])
 def test_connection():
     try:
@@ -27,17 +37,40 @@ def test_connection():
     except:
         return 500
 
-requests = []
+@app.route('/context_id', methods=['POST', "PUT", "DELETE"])
+def def_context_id():
+    url = "http://127.0.0.1:8080/app_contexts"
+    if request.method == "POST":
+        body = request.get_json()
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        response = requests.post(url, json=body, headers=headers)
 
-@app.before_request
-def def_log_request():
-    # Log the request information
-   log_request.insert_one({
-        'method': request.method,
-        'url': request.url,
-        'headers': dict(request.headers),
-        'body': request.get_data().decode('utf-8'),
-    })
+        if response.status_code == 201:
+            ContextId.insert_one(body)
+
+        return jsonify({
+            'status': response.status_code,
+            'body': response.json()
+        })
+
+    elif request.method == "PUT":
+        contextId = "test"
+        body = request.get_json()
+        response = requests.put('%s/%s' % (url, contextId), json=body)
+        return jsonify({
+            'status': response.status_code,
+            'body': response.json()
+        })
+
+    elif request.method == "DELETE":
+        contextId = "test"
+        response = requests.delete('%s/%s' % (url, contextId))
+        return jsonify({
+            'status': response.status_code,
+            'body': response.json()
+        })
 
 @app.route('/callback_ref', methods=['POST'])
 def notifications():
