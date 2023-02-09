@@ -110,7 +110,13 @@ def last_request():
         myquery = { "method": "POST" }
         last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
         last_request['_id'] = str(last_request['_id'])
-        return jsonify(last_request)
+
+        cont = ContextId.find_one("contextId")
+        array =  []
+        for x in cont:
+            array.append(x)
+
+        return jsonify(last_request, array)
     except:
         return jsonify("Not yet!")
 
