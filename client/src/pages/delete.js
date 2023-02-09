@@ -22,7 +22,7 @@ export const Delete = () => {
         const data = {contextId: formData.get("contextId")};
 
     try {
-        const outputText = await axios.delete(`http://127.0.0.1:8080/app_contexts/${input}`, data);
+        const outputText = await axios.delete(`http://127.0.0.1:5005/app_contexts/${input}`, data);
         setOutputText(outputText.status);
     } catch (error) {
         setResponseData(JSON.stringify(error.response.data));

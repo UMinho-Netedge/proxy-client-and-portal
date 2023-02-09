@@ -37,9 +37,9 @@ def test_connection():
     except:
         return 500
 
-@app.route('/context_id', methods=['POST', "PUT", "DELETE"])
+url = "http://host.docker.internal:8080/app_contexts"
+@app.route('/app_contexts', methods=['POST'])
 def def_context_id():
-    url = "http://127.0.0.1:8080/app_contexts"
     if request.method == "POST":
         body = request.get_json()
         headers = {
@@ -48,25 +48,31 @@ def def_context_id():
         response = requests.post(url, json=body, headers=headers)
 
         if response.status_code == 201:
-            ContextId.insert_one(body)
+            ContextId.insert_one({"contextId":body["contextId"]})
 
         return jsonify({
             'status': response.status_code,
             'body': response.json()
         })
 
-    elif request.method == "PUT":
-        contextId = "test"
+@app.route('/app_contexts/<contextId>', methods=["PUT", "DELETE"])
+def de_context_id_other(contextId):
+    if request.method == "PUT":
         body = request.get_json()
         response = requests.put('%s/%s' % (url, contextId), json=body)
+
         return jsonify({
             'status': response.status_code,
             'body': response.json()
         })
 
     elif request.method == "DELETE":
-        contextId = "test"
+    
         response = requests.delete('%s/%s' % (url, contextId))
+
+        if response.status_code == 201:
+            ContextId.delete_one({"contextId":contextId})
+
         return jsonify({
             'status': response.status_code,
             'body': response.json()

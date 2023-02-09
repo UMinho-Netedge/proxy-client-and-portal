@@ -7,7 +7,7 @@ export const Post_app_context = () => {
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
-  const url = "http://127.0.0.1:8080/app_contexts"
+  const url = "http://127.0.0.1:5005/app_contexts"
 
   const handleOutput = () => {
     setShowOutput(!showOutput);
