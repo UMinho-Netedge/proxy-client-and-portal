@@ -1,17 +1,23 @@
 .App {
   text-align: center;
+  background-color: white;
+  height: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.logo {
+  width: 180px;
 }
 
 .navbar {
   width: 100%;
   height: 80px;
-  background-color: rgb(192, 192, 192);
+  background-color: #5324A3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,8 +31,8 @@ body {
 }
 
 .navbar a:focus {
-  color: rgb(255,255,255);
-  border-bottom: 3px solid white;
+  color: #04FCE4;
+  border-bottom: 3px solid #04FCE4;
 }
 
 .get_link:hover {
@@ -54,7 +60,7 @@ body {
 }
 
 .links a {
-  color: black;
+  color: #04FCE4;
   text-decoration: none;
   padding-bottom: 2px;
   margin: 10px;
@@ -62,7 +68,7 @@ body {
 
 input,
 textarea, p {
-  font-family: "Nunito", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 input, textarea, p {
