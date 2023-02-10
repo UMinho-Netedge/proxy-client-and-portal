@@ -106,19 +106,17 @@ def notifications():
 
 @app.route('/notifications', methods=['GET'])
 def last_request():
-    try:
-        myquery = { "method": "POST" }
-        last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
-        last_request['_id'] = str(last_request['_id'])
+    #myquery = { "method": "POST" }
+    #last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
+    #last_request['_id'] = str(last_request['_id'])
+    
+    contextIdCollection = []
+    for x in ContextId.find({}, {"_id": 0, "contextId":1}):
+        contextIdCollection.append(x)
 
-        cont = ContextId.find_one("contextId")
-        array =  []
-        for x in cont:
-            array.append(x)
-
-        return jsonify(last_request, array)
-    except:
-        return jsonify("Not yet!")
+        return jsonify(contextIdCollection)
+    #except:
+    #    return jsonify("Not yet!")
 
 @app.errorhandler(400)
 def page_not_found(e):
