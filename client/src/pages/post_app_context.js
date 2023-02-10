@@ -19,8 +19,8 @@ export const Post_app_context = () => {
     const data = JSON.parse(formData.get("body"));
     try {
       const outputText = await axios.post(url, data);
-      setResponseData(JSON.stringify(outputText.data));
-      setOutputText(outputText.status);
+      setResponseData(JSON.stringify(outputText.data["body"]));
+      setOutputText(outputText.data["status"]);
     } catch (error) {
       setResponseData(JSON.stringify(error.response.data));
       setOutputText(error.response.status)
@@ -32,7 +32,7 @@ export const Post_app_context = () => {
     <div className="post">
       <h2>Post App Context</h2>
       <form onSubmit={handleSubmit}>
-        <p className="url">Sending to {url}</p>   
+        <p className="url">Sending to http://127.0.0.1:8080/app_contexts</p>   
         <h4>Request Body</h4>   
         <textarea type="text" name="body" placeholder="Insert the request body" />
         <div className="column">

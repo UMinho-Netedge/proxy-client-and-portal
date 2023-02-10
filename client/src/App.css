@@ -28,7 +28,7 @@ body {
 .navbar .links {
   margin-left: 10px;
   cursor: pointer;
-  color: #ffffff;
+  color: #fff;
 }
 
 .navbar a:focus {
@@ -40,7 +40,7 @@ body {
 }
 
 .links a {
-  color: #ffffff;
+  color: #a8dde2;
   text-decoration: none;
   padding-bottom: 2px;
   margin: 10px;

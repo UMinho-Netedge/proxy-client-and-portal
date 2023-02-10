@@ -22,7 +22,7 @@ export const Put = () => {
       const data = JSON.parse(formData.get("body"));
     try {
       const outputText = await axios.put(`http://127.0.0.1:5005/app_contexts/${input}`, data);
-      setOutputText(outputText.status);
+      setOutputText(outputText.status["status"]);
     } catch (error) {
       setResponseData(JSON.stringify(error.response.data));
       setOutputText(error.response.status)

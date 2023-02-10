@@ -5,6 +5,7 @@ from src.schemas import *
 from src.models import *
 from src.error import Error
 from flask_cors import CORS
+import datetime
 
 app = Flask(__name__)
 
@@ -23,6 +24,7 @@ CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_head
 @app.before_request
 def def_log_request():
    log_request.insert_one({
+        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'method': request.method,
         'url': request.url,
         'headers': dict(request.headers),
@@ -106,17 +108,18 @@ def notifications():
 
 @app.route('/notifications', methods=['GET'])
 def last_request():
-    #myquery = { "method": "POST" }
-    #last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
-    #last_request['_id'] = str(last_request['_id'])
-    
-    contextIdCollection = []
-    for x in ContextId.find({}, {"_id": 0, "contextId":1}):
-        contextIdCollection.append(x)
+    try: 
+        myquery = { "method": "POST" }
+        last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
+        last_request['_id'] = str(last_request['_id'])
+        
+        contextIdCollection = []
+        for cont in ContextId.find({},{ "_id": 0, "contextId": 1}):
+            contextIdCollection.append(cont["contextId"])
 
-        return jsonify(contextIdCollection)
-    #except:
-    #    return jsonify("Not yet!")
+        return jsonify(last_request, contextIdCollection)
+    except:
+        return jsonify("Not yet!")
 
 @app.errorhandler(400)
 def page_not_found(e):
