@@ -2,6 +2,8 @@
   text-align: center;
   background-color: white;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -10,13 +12,25 @@ body {
   font-family: "Source Sans Pro", sans-serif;
 }
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #5324A3;
+  color: white;
+  text-align: center;
+  line-height: 60px;
+  font-size: 10px;
+}
+
 .logo {
   width: 180px;
 }
 
 .navbar {
   width: 100%;
-  height: 80px;
+  height: 70px;
   background-color: #5324A3;
   display: flex;
   justify-content: flex-start;
@@ -28,25 +42,25 @@ body {
 .navbar .links {
   margin-left: 10px;
   cursor: pointer;
-  color: #fff;
 }
 
 .navbar a:focus {
   font-weight: bold;
 }
 
-.links:hover{
+.get_link:hover, .post_link:hover,.put_link:hover,
+.delete_link:hover, .notifications_link:hover{
   text-decoration: underline
 }
 
 .links a {
-  color: #a8dde2;
+  color: #CCE9E8;
   text-decoration: none;
   padding-bottom: 2px;
   margin: 10px;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 13px;
   line-height: 24px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 11px;
   text-decoration: none;
 }
 
@@ -188,6 +202,5 @@ button {
 .url{
   margin-top: 20px;
 }
-
 
 
