@@ -13,7 +13,11 @@ import { Notifications } from './pages/notifications';
 function Home() {
   if (window.location.pathname === "/") {
     return (
-    <p>Hello</p>
+      <footer className="footer">
+      <h4>Apache License</h4>
+      <h4>Version 2.0, January 2004</h4>
+      <h4>http://www.apache.org/licenses/</h4>
+    </footer>
     )
   }
   return null;

@@ -19,51 +19,35 @@ body {
   height: 80px;
   background-color: #5324A3;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
+  text-align: left;
   margin-bottom: 20px;
 }
 
 .navbar .links {
-  text-align: center;
-  margin-right: 50px;
+  margin-left: 10px;
   cursor: pointer;
+  color: #ffffff;
 }
 
 .navbar a:focus {
-  color: #04FCE4;
-  border-bottom: 3px solid #04FCE4;
-}
-
-.get_link:hover {
-  color: rgb(62, 139, 202);
   font-weight: bold;
 }
 
-.post_link:hover {
-  color: rgb(67, 175, 96);
-  font-weight: bold;
-}
-
-.put_link:hover {
-  color: rgb(245, 138, 24);
-  font-weight: bold;
-}
-
-.delete_link:hover {
-  color: rgb(195, 38, 38);
-  font-weight: bold;
-}
-
-.notifications_link:hover {
-  font-weight: bold;
+.links:hover{
+  text-decoration: underline
 }
 
 .links a {
-  color: #04FCE4;
+  color: #ffffff;
   text-decoration: none;
   padding-bottom: 2px;
   margin: 10px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 13px;
+  line-height: 24px;
+  text-decoration: none;
 }
 
 input,
