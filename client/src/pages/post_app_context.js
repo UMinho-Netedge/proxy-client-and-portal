@@ -17,14 +17,9 @@ export const Post_app_context = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = JSON.parse(formData.get("body"));
-    try {
-      const outputText = await axios.post(url, data);
-      setResponseData(JSON.stringify(outputText.data["body"]));
-      setOutputText(outputText.data["status"]);
-    } catch (error) {
-      setResponseData(JSON.stringify(error.response.data));
-      setOutputText(error.response.status)
-    }
+    const outputText = await axios.post(url, data);
+    setResponseData(JSON.stringify(outputText.data["body"]));
+    setOutputText(outputText.data["status"]);
   };
 
 

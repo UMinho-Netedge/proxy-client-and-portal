@@ -20,16 +20,6 @@ ContextId = db["ContextId"]
 log_request = db['log_request']
 
 CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
-
-@app.before_request
-def def_log_request():
-   log_request.insert_one({
-        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        'method': request.method,
-        'url': request.url,
-        'headers': dict(request.headers),
-        'body': request.get_data().decode('utf-8'),
-    })
     
 @app.route('/ping', methods=['GET'])
 def test_connection():
@@ -39,7 +29,7 @@ def test_connection():
     except:
         return 500
 
-url = "http://host.docker.internal:8080/app_contexts"
+url = "http://host.docker.internal:5001/app_contexts"
 @app.route('/app_contexts', methods=['POST'])
 def def_context_id():
     if request.method == "POST":
@@ -49,40 +39,64 @@ def def_context_id():
         }
         response = requests.post(url, json=body, headers=headers)
 
+        try:
+            response_json = response.json()
+        except:
+            response_json = {}
+
         if response.status_code == 201:
             ContextId.insert_one({"contextId":body["contextId"]})
 
         return jsonify({
             'status': response.status_code,
-            'body': response.json()
+            'body': response_json
         })
 
-@app.route('/app_contexts/<contextId>', methods=["PUT", "DELETE"])
-def de_context_id_other(contextId):
-    if request.method == "PUT":
-        body = request.get_json()
-        response = requests.put('%s/%s' % (url, contextId), json=body)
+@app.route('/app_contexts/<contextId>', methods=['PUT'])
+def put_contexts(contextId):
+    body = request.get_json()
+    response = requests.put('%s/%s' % (url, contextId), json=body)
 
-        return jsonify({
-            'status': response.status_code,
-            'body': response.json()
-        })
+    try:
+        response_json = response.json()
+    except:
+        response_json = {}
 
-    elif request.method == "DELETE":
-    
-        response = requests.delete('%s/%s' % (url, contextId))
+    return jsonify({
+        'status': response.status_code,
+        'body': response_json
+    })
 
-        if response.status_code == 201:
-            ContextId.delete_one({"contextId":contextId})
+@app.route('/app_contexts/<contextId>', methods=['DELETE'])
+def del_contexts(contextId):
+    response = requests.delete('%s/%s' % (url, contextId))
 
-        return jsonify({
-            'status': response.status_code,
-            'body': response.json()
-        })
+    try:
+        response_json = response.json()
+    except:
+        response_json = {}
+
+    if response.status_code == 204:
+        ContextId.delete_one({"contextId":contextId})
+
+    return jsonify({
+        'status': response.status_code,
+        'body': response_json
+    })
 
 @app.route('/callback_ref', methods=['POST'])
 def notifications():
+
     body = request.get_json()
+
+    log_request.insert_one({
+        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'method': request.method,
+        'url': request.url,
+        'headers': dict(request.headers),
+        'body': body
+    })
+
     try: 
         if body["notificationType"] == "AddressChangeNotification":
             data = AddressChangeNotification.from_json(body)

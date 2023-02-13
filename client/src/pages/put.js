@@ -20,13 +20,9 @@ export const Put = () => {
       event.preventDefault();
       const formData = new FormData(event.target);
       const data = JSON.parse(formData.get("body"));
-    try {
       const outputText = await axios.put(`http://127.0.0.1:5005/app_contexts/${input}`, data);
-      setOutputText(outputText.status["status"]);
-    } catch (error) {
-      setResponseData(JSON.stringify(error.response.data));
-      setOutputText(error.response.status)
-    }
+      setResponseData(JSON.stringify(outputText.data["body"]))
+      setOutputText(outputText.data["status"]);
   };
 
     return (
