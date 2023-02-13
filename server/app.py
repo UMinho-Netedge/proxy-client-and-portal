@@ -86,18 +86,8 @@ def del_contexts(contextId):
 
 @app.route('/callback_ref', methods=['POST'])
 def notifications():
-
-    body = request.get_json()
-
-    log_request.insert_one({
-        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        'method': request.method,
-        'url': request.url,
-        'headers': dict(request.headers),
-        'body': body
-    })
-
     try: 
+        body = request.get_json()
         if body["notificationType"] == "AddressChangeNotification":
             data = AddressChangeNotification.from_json(body)
             AddressChange.insert_one(object_to_mongodb_dict(data.to_json()))  
@@ -112,19 +102,29 @@ def notifications():
             AppLocationAvailability.insert_one(object_to_mongodb_dict(data.to_json()))
         else:
             msg = "Notification type not valid!"
-            return Error.error_400(msg)
+            return_msg, return_code = Error.error_400(msg)
+            add_log(return_msg, return_code)
+            return return_msg, return_code
+        add_log(body, 204)
         return Response(status=204)
 
-    except Exception as e:
-        if e.__class__.__name__ == "ValidationError":
-            msg = "Request body not valid, jsonschema.exceptions.ValidationError"
-            return Error.error_400(msg)
+    except:
+        msg = "Request body not valid, jsonschema.exceptions.ValidationError"
+        return_msg, return_code = Error.error_400(msg)
+        add_log(return_msg, return_code)
+        return return_msg, return_code 
+
+def add_log(body, statusCode):
+    log_request.insert_one({
+        'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'body': body,
+        "status": statusCode
+    })
 
 @app.route('/notifications', methods=['GET'])
 def last_request():
     try: 
-        myquery = { "method": "POST" }
-        last_request = log_request.find(myquery).sort("_id", -1).limit(1)[0]
+        last_request = log_request.find().sort("_id", -1).limit(1)[0]
         last_request['_id'] = str(last_request['_id'])
         
         contextIdCollection = []
