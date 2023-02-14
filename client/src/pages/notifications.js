@@ -4,28 +4,32 @@ import axios from 'axios';
 export const Notifications = () => {
     const [outputText, setOutputText] = useState("");
     const [responseData, setResponseData] = useState("");
-    const url = 'http://127.0.0.1:5005/callback_ref'
+    const [responseTime, setResponseTime] = useState("");
+    const [responseContextId, setResponseContextId] = useState("");
+    const url = 'http://127.0.0.1:5005/notifications'
 
     useEffect(() => {
         axios.get(url)
             .then(response => {
-            setOutputText(response.status);
-            setResponseData(response.data);
-            })
-            .catch(error => {
-            setOutputText(error.response.status);
-            setResponseData(JSON.stringify(error.response.data));
+            setOutputText(response.data[0]["status"]);
+            setResponseData(JSON.stringify(response.data[0]["body"]));
+            setResponseTime(response.data[0]["time"])
+            setResponseContextId(response.data[1])
             });
         }, []);
 
     return (
     <div>
         <div className="notifications">
-        <h2>Notifications</h2>
+        <h2>Last Notification</h2>
         <h4>Status</h4>
         <p>Response status: {outputText}</p>
         <h4>Body</h4>
         <textarea value={responseData} readOnly />
+        <h4>Time</h4>
+        <textarea value={responseTime} readOnly />
+        <h4>ContextId already created </h4>
+        <textarea value={responseContextId} readOnly />
         </div>
     </div>
     );

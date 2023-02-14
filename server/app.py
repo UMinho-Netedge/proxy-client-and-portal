@@ -29,7 +29,7 @@ def test_connection():
     except:
         return 500
 
-url = "http://host.docker.internal:5001/app_contexts"
+url = "http://host.docker.internal:8080/app_contexts"
 @app.route('/app_contexts', methods=['POST'])
 def def_context_id():
     if request.method == "POST":
