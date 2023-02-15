@@ -39,9 +39,28 @@ body {
   color: #AB5EEC;
 }
 
-
 .logo {
   width: 180px;
+}
+
+.compete2020, .portugal2020, .europa{
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.compete2020 {
+  width: 110px;
+  height: 32.78px;
+}
+
+.portugal2020 {
+  width: 110px;
+  height: 34px;
+}
+
+.europa {
+  width: 110px;
+  height: 55.18px;
 }
 
 .navbar {
@@ -62,6 +81,28 @@ body {
 
 .navbar a:focus {
   font-weight: bold;
+}
+
+.text-image-button{
+  width: 80px;
+  border: 20px #AB5EEC;
+  padding: 5px;
+  background-color: #04FCE4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;;
+}
+
+.text-image-button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.text-image-button span {
+  font-size: 16px;
 }
 
 .get_link:hover, .post_link:hover,.put_link:hover,

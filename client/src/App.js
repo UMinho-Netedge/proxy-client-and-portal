@@ -13,15 +13,31 @@ import { Notifications } from './pages/notifications';
 function Home() {
   if (window.location.pathname === "/") {
     return (
-      <footer className="footer">
-        <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache License</a>
-        <h4>Version 2.0, January 2004</h4>
-        <h4 className='names'>Marina Albuquerque & Ricardo Mesquita</h4>
-    </footer>
+      <div>
+        <h4>Co-financed by</h4>
+        <div className='cofinanced'>
+          <a href="https://www.compete2020.gov.pt/">
+            <img className='compete2020' src={require('./images/level_compete.png')} alt="compete2020" />
+          </a>
+          <a href="https://portaldosincentivos.pt/index.php/portugal-2020">
+            <img className='portugal2020' src={require('./images/level_portugal-2020.png')} alt="portugal2020" />
+          </a>
+          <a href="https://ec.europa.eu/regional_policy/funding/erdf_en?etrans=pt">
+            <img className='europa' src={require('./images/logos-FEDR_.png')} alt="europa" />
+          </a>
+        </div>
+        <footer className="footer">
+          <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache License</a>
+          <h4>Version 2.0, January 2004</h4>
+          <h4 className='names'>Marina Albuquerque & Ricardo Mesquita</h4>
+        </footer>
+      </div>
     )
   }
   return null;
 }
+
+
 
 function App() {
 
