@@ -17,7 +17,7 @@ AppContextDelete = db["AppContextDelete"]
 AppContextUpdate = db["AppContextUpdate"]
 AppLocationAvailability = db["AppLocationAvailability"]
 ContextId = db["ContextId"]
-log_request = db['log_request']
+notifications = db['notifications']
 
 CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
     
@@ -85,7 +85,7 @@ def del_contexts(contextId):
     })
 
 @app.route('/callback_ref', methods=['POST'])
-def notifications():
+def def_notifications():
     try: 
         body = request.get_json()
         if body["notificationType"] == "AddressChangeNotification":
@@ -115,7 +115,7 @@ def notifications():
         return return_msg, return_code 
 
 def add_log(body, statusCode):
-    log_request.insert_one({
+    notifications.insert_one({
         'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'body': body,
         "status": statusCode
@@ -124,7 +124,7 @@ def add_log(body, statusCode):
 @app.route('/notifications', methods=['GET'])
 def last_request():
     try: 
-        last_request = log_request.find().sort("_id", -1).limit(1)[0]
+        last_request = notifications.find().sort("_id", -1).limit(1)[0]
         last_request['_id'] = str(last_request['_id'])
         
         contextIdCollection = []
