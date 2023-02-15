@@ -1,9 +1,9 @@
 
 import React from 'react';
-import './App.css';
+import './app.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Get } from './pages/get';
-import { Navbar } from './Navbar';
+import { Navbar } from './navbar';
 import { Delete } from './pages/delete';
 import { Post_app_context } from './pages/post_app_context';
 import { Put } from './pages/put';
@@ -14,9 +14,9 @@ function Home() {
   if (window.location.pathname === "/") {
     return (
       <footer className="footer">
-      <h4>Apache License</h4>
-      <h4>Version 2.0, January 2004</h4>
-      <h4>http://www.apache.org/licenses/</h4>
+        <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache License</a>
+        <h4>Version 2.0, January 2004</h4>
+        <h4 className='names'>Marina Albuquerque & Ricardo Mesquita</h4>
     </footer>
     )
   }

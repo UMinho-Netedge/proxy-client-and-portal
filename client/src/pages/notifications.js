@@ -27,7 +27,7 @@ export const Notifications = () => {
         <h4>Body</h4>
         <textarea value={responseData} readOnly />
         <h4>Time</h4>
-        <textarea value={responseTime} readOnly />
+        <p>Time: {responseTime}</p>
         <h4>ContextId already created </h4>
         <textarea value={responseContextId} readOnly />
         </div>
