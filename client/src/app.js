@@ -1,9 +1,8 @@
-
 import React from 'react';
 import './app.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Get } from './pages/get';
-import { Navbar } from './navbar';
+import { Navbar } from './navbar.js';
 import { Delete } from './pages/delete';
 import { Post_app_context } from './pages/post_app_context';
 import { Put } from './pages/put';
@@ -36,8 +35,6 @@ function Home() {
   }
   return null;
 }
-
-
 
 function App() {
 

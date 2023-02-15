@@ -1,7 +1,21 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 export const Navbar = () => {
+
+  const [OutputText, setOutputText] = useState("");
+  const url = "http://127.0.0.1:5005/login"; 
+  function handleOutput() {
+    axios.get(url)
+      .then(response => {
+        setOutputText(response.status);
+      })
+      .catch(error => {
+        setOutputText(error.response.status);
+      });
+  }
+
   return (
     <nav>
       <div className='navbar'>
@@ -25,7 +39,7 @@ export const Navbar = () => {
           <Link className='post_link' to="/post_obtain_app_loc_availability"> POST OBTAIN APP LOCATION AVAILABILITY </Link>
           <Link className='notifications_link' to="/notifications"> NOTIFICATIONS </Link>
         </div>
-        <button className="text-image-button">
+        <button className="text-image-button" onClick={handleOutput}>
           <img src="./images/google-logo.png" alt="GoogleLogo"/>
           <span>Login</span>
         </button>
