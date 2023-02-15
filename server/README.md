@@ -56,6 +56,7 @@ $ bash del.sh
 * DELETE - /app_contexts/<contextId> - Deletion of an existing application context.
 * POST - /callback_ref - Send notification events by mx2. 
 * GET - /notifications - Gets the most recent notification event and the client's ContexId. 
+* GET - /login - Access to the login service.
 
 ## Notes
 * The server can be started by running exe.sh in the scripts folder. This will, however, always build and push the most recent version into the docker repository.

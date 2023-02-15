@@ -135,6 +135,12 @@ def last_request():
     except:
         return jsonify("Not yet!")
 
+@app.route('/login', methods=['GET'])
+def def_login():
+    url = "http://host.docker.internal:5000/login"
+    response = requests.delete(url)
+    return response.status_code
+
 @app.errorhandler(400)
 def page_not_found(e):
     msg = "No request parameters found, request Content-Type was not {application/json}"
