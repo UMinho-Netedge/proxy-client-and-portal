@@ -45,10 +45,12 @@ export const Navbar = () => {
           <Link className='post_link' to="/post_obtain_app_loc_availability"> POST OBTAIN APP LOCATION AVAILABILITY </Link>
           <Link className='notifications_link' to="/notifications"> NOTIFICATIONS </Link>
         </div>
+        <div className="button-container">
         <button className="text-image-button" onClick={() => { handleClick(); handleOutput() }}>
-          <img src="/google-logo.png" alt="GoogleLogo"/>
+          <img src={'./google-logo.png'} alt="GoogleLogo"/>
           <span>Login</span>
         </button>
+      </div>
       </div>
     </nav>
   );

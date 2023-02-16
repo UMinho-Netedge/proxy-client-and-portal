@@ -13,8 +13,8 @@ function Home() {
   if (window.location.pathname === "/") {
     return (
       <div>
-        <h4>Co-financed by</h4>
         <div className='cofinanced'>
+          <h4>Co-financed by</h4>
           <a href="https://www.compete2020.gov.pt/">
             <img className='compete2020' src={require('./images/level_compete.png')} alt="compete2020" />
           </a>
