@@ -46,7 +46,7 @@ export const Navbar = () => {
           <Link className='notifications_link' to="/notifications"> NOTIFICATIONS </Link>
         </div>
         <button className="text-image-button" onClick={() => { handleClick(); handleOutput() }}>
-          <img src="./images/google-logo.png" alt="GoogleLogo"/>
+          <img src="/google-logo.png" alt="GoogleLogo"/>
           <span>Login</span>
         </button>
       </div>
