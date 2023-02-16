@@ -134,12 +134,11 @@ def last_request():
         return jsonify(last_request, contextIdCollection)
     except:
         return jsonify("Not yet!")
-
-@app.route('/login', methods=['GET'])
-def def_login():
+    
+@app.route('/login')
+def proxy():
     url = "http://host.docker.internal:5000/login"
-    response = requests.get(url)
-    return response
+    return requests.get(url).content
 
 @app.errorhandler(400)
 def page_not_found(e):
