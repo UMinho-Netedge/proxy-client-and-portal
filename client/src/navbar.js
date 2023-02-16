@@ -19,7 +19,7 @@ export const Navbar = () => {
 
   
   const handleClick = () => {
-    window.location.href = 'http://127.0.0.1:5005/login';
+    window.open('http://127.0.0.1:5005/login', '_blank', 'noreferrer');
   };
 
   return (

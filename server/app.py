@@ -139,7 +139,7 @@ def last_request():
 def def_login():
     url = "http://host.docker.internal:5000/login"
     response = requests.get(url)
-    return "ok"
+    return response
 
 @app.errorhandler(400)
 def page_not_found(e):
