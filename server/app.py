@@ -29,33 +29,31 @@ def test_connection():
     except:
         return 500
 
-url = "http://host.docker.internal:8080/app_contexts"
+url = "http://host.docker.internal:8080"
 @app.route('/app_contexts', methods=['POST'])
 def def_context_id():
-    if request.method == "POST":
-        body = request.get_json()
-        headers = {
-            'Content-Type': 'application/json'
-        }
-        response = requests.post(url, json=body, headers=headers)
+    body = request.get_json()
+    token = request.headers.get("id_token")
+    response = requests.post("%s/app_contexts" % url, json=body, headers={"id_token":token})
 
-        try:
-            response_json = response.json()
-        except:
-            response_json = {}
+    try:
+        response_json = response.json()
+    except:
+        response_json = {}
 
-        if response.status_code == 201:
-            ContextId.insert_one({"contextId":body["contextId"]})
+    if response.status_code == 201:
+        ContextId.insert_one({"contextId":body["contextId"]})
 
-        return jsonify({
-            'status': response.status_code,
-            'body': response_json
-        })
+    return jsonify({
+        'status': response.status_code,
+        'body': response_json
+    })
 
 @app.route('/app_contexts/<contextId>', methods=['PUT'])
 def put_contexts(contextId):
     body = request.get_json()
-    response = requests.put('%s/%s' % (url, contextId), json=body)
+    token = request.headers.get("id_token")
+    response = requests.put('%s/app_contexts/%s' % (url, contextId), json=body, headers={"id_token":token})
 
     try:
         response_json = response.json()
@@ -69,7 +67,8 @@ def put_contexts(contextId):
 
 @app.route('/app_contexts/<contextId>', methods=['DELETE'])
 def del_contexts(contextId):
-    response = requests.delete('%s/%s' % (url, contextId))
+    token = request.headers.get("id_token")
+    response = requests.delete('%s/app_contexts/%s' % (url, contextId), headers={"id_token":token})
 
     try:
         response_json = response.json()
@@ -78,6 +77,22 @@ def del_contexts(contextId):
 
     if response.status_code == 204:
         ContextId.delete_one({"contextId":contextId})
+
+    return jsonify({
+        'status': response.status_code,
+        'body': response_json
+    })
+
+@app.route('/obtain_app_loc_availability', methods=['POST'])
+def def_context_id():
+    body = request.get_json()
+    token = request.headers.get("id_token")
+    response = requests.post("%s/obtain_app_loc_availability" % url, json=body, headers={"id_token":token})
+
+    try:
+        response_json = response.json()
+    except:
+        response_json = {}
 
     return jsonify({
         'status': response.status_code,
