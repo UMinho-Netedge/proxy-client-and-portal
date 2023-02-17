@@ -8,7 +8,7 @@ export const Post_obtain_app_loc_availability = () => {
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
   //const [clicked, setClicked] = useDisableClickState();
-  const url = "http://127.0.0.1:8080/obtain_app_loc_availability"
+  const url = "http://127.0.0.1:5005/obtain_app_loc_availability"
   
   const handleOutput = () => {
     setShowOutput(!showOutput);
@@ -23,14 +23,16 @@ export const Post_obtain_app_loc_availability = () => {
     const formData = new FormData(event.target);
     const data = JSON.parse(formData.get("body"));
 
-    try {
-      const outputText = await axios.post(url, data);
-      setResponseData(JSON.stringify(outputText.data));
-      setOutputText(outputText.status);
-    } catch (error) {
-      setResponseData(JSON.stringify(error.response.data));
-      setOutputText(error.response.status)
-    }
+    const config = {
+      headers: {
+        "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjU5NjJlN2EwNTljN2Y1YzBjMGQ1NmNiYWQ1MWZlNjRjZWVjYTY3YzYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI3ODY5Mjc1MDkzNzItOHFxbjNlZDBsc2RqazI5aWh2ZzlvYjBlZXJxcWlhMm4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI3ODY5Mjc1MDkzNzItOHFxbjNlZDBsc2RqazI5aWh2ZzlvYjBlZXJxcWlhMm4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDk4NzU0NzExMjYzMzA5MzkzMjIiLCJlbWFpbCI6Im5ldGVkZ2Vwcm9qZWN0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiVDFVOG1LN3pSMGRMUWpUMU03WVpwZyIsImlhdCI6MTY3NjYzMjI3MiwiZXhwIjoxNjc2NjM1ODcyfQ.ji4U6czsNa_ha4XiCR7mRGi1QHWWp5YIUuMpsGdWf1_pQT6fct9nqll7d7NnF1qKy_TV8FwpcRIIo0ibQwcIQDr1lNw2dg_vQzSCCWl4Mv3pjHA669Yv_tYtXVKtSHv1MxF5KV7GqBMNKK6Q_y4i-jZ_yBJfq1E-UMlSFyzUSmfB0IfMOO4Rexp7AfL8drwfhgu4Nhep3vyfGwd5tWogfwtElZec2O7oqjbVqoZNJ8e4_7qxBfNBB5_WeYNBmufJ4sCP7Y1KsPAweMx1-_bRAmd6DMT7_hhglVuc3_LwsdfzYG6ecbtx7vKZe_c38PVhsV3yDNTn9WXEJ3CNiWJ0QQ"
+      }
+    };
+
+    const outputText = await axios.post(url, data, config);
+
+    setResponseData(JSON.stringify(outputText.data["body"]));
+    setOutputText(outputText.data["status"]);
   };
 
     //adicionar disabled={clicked} no button
