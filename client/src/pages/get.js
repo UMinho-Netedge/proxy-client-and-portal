@@ -12,7 +12,7 @@ export const Get = () => {
   const [appSoftVersion, setAppSoftVersion] = useState("");
   const [vendorId, setVendorId] = useState("");
   const [serviceCont, setServiceCont] = useState("");
-  const url = "http://127.0.0.1:8080/app_list";
+  const url = "http://127.0.0.1:5005/app_list";
 
   function handleToggle() {
     setIsOpen(!isOpen);
@@ -40,21 +40,18 @@ export const Get = () => {
       }
     }
 
-    axios.get(url, {params: parValue})
+    const token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjU5NjJlN2EwNTljN2Y1YzBjMGQ1NmNiYWQ1MWZlNjRjZWVjYTY3YzYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI3ODY5Mjc1MDkzNzItOHFxbjNlZDBsc2RqazI5aWh2ZzlvYjBlZXJxcWlhMm4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI3ODY5Mjc1MDkzNzItOHFxbjNlZDBsc2RqazI5aWh2ZzlvYjBlZXJxcWlhMm4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDk4NzU0NzExMjYzMzA5MzkzMjIiLCJlbWFpbCI6Im5ldGVkZ2Vwcm9qZWN0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiVlpXS0RBMWFWdjFQbk1uemxQc242USIsImlhdCI6MTY3NjY0MjAyMywiZXhwIjoxNjc2NjQ1NjIzfQ.C9eiP8gKkrgdKlM85PsUWRh2JgmYIsRiM1357WFwnTCRodlBKCp6aiK8goTYh4-Om4y2R8NwMiYVBNkloccefMO6gkkgGDB3kPCktz72rO2d9K0h6o0uAkz0-0fkzdY4cRdmNj9jsLOwq4M-HFHcz5VgOO12fSOkNC0GSv9WuKbGEmgZPU5NpLJx5xs56e7yQp_lpoaVxjZkINtdq_IISaHOkPN1Ew2LvgHtbMPVvWQbDOwznxm37WSDJCMNglNWd59W5OgIS8pW7hx5tYKpQzyCHzwX4qjCMLNhqUdics8FiH7l5bwKTpDqbKlT30NNOgxpVlY-Il9o7exbdy6cKA"
+    axios.get(url, { params: parValue, headers: { 'access_token': token } })
       .then(response => {
-        setOutputText(response.status);
-        setResponseData(JSON.stringify(response.data));
+        setResponseData(JSON.stringify(response.data["body"]));
+        setOutputText(response.data["status"]);
       })
-      .catch(error => {
-        setOutputText(error.response.status);
-        setResponseData(typeof error.response.data === 'object' ? JSON.stringify(error.response.data) : error.response.data);
-      });
   }
 
   return (
     <div className="get">
     <h2>Get App List</h2>
-      <p name="url">Sending to {url}</p>
+      <p name="url">Sending to http://127.0.0.1:8080/app_list </p>
       <div className="parameters">
         <button className='button_get' onClick={() => { handleClick(); handleToggle() }}>{buttonText}</button>
         {isOpen ? (

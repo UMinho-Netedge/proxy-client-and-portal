@@ -17,7 +17,6 @@ export const Navbar = () => {
       });
   }
 
-  
   const handleClick = () => {
     window.open('http://localhost:5000/login', '_blank', 'noreferrer');
   };
