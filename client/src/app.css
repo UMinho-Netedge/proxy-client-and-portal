@@ -7,6 +7,11 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 
+.page {
+  background-color: #CCE9E8;
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;

@@ -12,7 +12,10 @@ import { Notifications } from './pages/notifications';
 function Home() {
   if (window.location.pathname === "/") {
     return (
-      <div>
+      <div className='page'>
+        <div className='partners'>
+
+        </div>
         <div className='cofinanced'>
           <h4>Co-financed by</h4>
           <a href="https://www.compete2020.gov.pt/">
