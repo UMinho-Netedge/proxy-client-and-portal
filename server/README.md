@@ -60,3 +60,4 @@ $ bash del.sh
 
 ## Notes
 * The server can be started by running exe.sh in the scripts folder. This will, however, always build and push the most recent version into the docker repository.
+* Cleaning the data client file is great practice to prevent premition issues.
