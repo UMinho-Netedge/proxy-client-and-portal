@@ -13,9 +13,11 @@ function Home() {
   if (window.location.pathname === "/") {
     return (
       <div className='page'>
-        <div className='partners'>
 
+        <div className='partners'>
+          <h4>Partners</h4>
         </div>
+
         <div className='cofinanced'>
           <h4>Co-financed by</h4>
           <a href="https://www.compete2020.gov.pt/">
