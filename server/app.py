@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, jsonify, redirect
+from flask import Flask, request, Response, jsonify
 import requests
 from pymongo import MongoClient
 from src.schemas import *
@@ -30,11 +30,29 @@ def test_connection():
         return 500
 
 url = "http://host.docker.internal:8080"
+@app.route('/app_list', methods=['GET'])
+def def_app_list():
+    token = request.headers.get("access_token")
+
+    query_params = request.args.to_dict()
+
+    response = requests.get(url + '/app_list', params=query_params, headers={"access_token": token})
+
+    try:
+        response_json = response.json()
+    except:
+        response_json = {}
+
+    return jsonify({
+        'status': response.status_code,
+        'body': response_json
+    })
+
 @app.route('/app_contexts', methods=['POST'])
 def def_context_id():
     body = request.get_json()
-    token = request.headers.get("id_token")
-    response = requests.post("%s/app_contexts" % url, json=body, headers={"id_token":token})
+    token = request.headers.get("access_token")
+    response = requests.post("%s/app_contexts" % (url), json=body, headers={"access_token":token})
 
     try:
         response_json = response.json()
@@ -52,8 +70,8 @@ def def_context_id():
 @app.route('/app_contexts/<contextId>', methods=['PUT'])
 def put_contexts(contextId):
     body = request.get_json()
-    token = request.headers.get("id_token")
-    response = requests.put('%s/app_contexts/%s' % (url, contextId), json=body, headers={"id_token":token})
+    token = request.headers.get("access_token")
+    response = requests.put('%s/app_contexts/%s' % (url, contextId), json=body, headers={"access_token":token})
 
     try:
         response_json = response.json()
@@ -67,8 +85,8 @@ def put_contexts(contextId):
 
 @app.route('/app_contexts/<contextId>', methods=['DELETE'])
 def del_contexts(contextId):
-    token = request.headers.get("id_token")
-    response = requests.delete('%s/app_contexts/%s' % (url, contextId), headers={"id_token":token})
+    token = request.headers.get("access_token")
+    response = requests.delete('%s/app_contexts/%s' % (url, contextId), headers={"access_token":token})
 
     try:
         response_json = response.json()
@@ -84,10 +102,10 @@ def del_contexts(contextId):
     })
 
 @app.route('/obtain_app_loc_availability', methods=['POST'])
-def def_context_id():
+def def_obtain_app_loc_availability():
     body = request.get_json()
-    token = request.headers.get("id_token")
-    response = requests.post("%s/obtain_app_loc_availability" % url, json=body, headers={"id_token":token})
+    token = request.headers.get("access_token")
+    response = requests.post("%s/obtain_app_loc_availability" % (url), json=body, headers={"access_token":token})
 
     try:
         response_json = response.json()
