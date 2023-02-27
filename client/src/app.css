@@ -12,6 +12,13 @@
   height: 100%;
 }
 
+.partner_imgs {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 body {
   margin: 0;
   padding: 0;
