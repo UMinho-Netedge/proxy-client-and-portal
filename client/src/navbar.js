@@ -10,34 +10,36 @@ export const Navbar = () => {
 
   const openLogin = () => {
     window.open('http://localhost:5000/login', '_blank', 'noreferrer');
+    // const headers = getAllResponseHeaders();
+    // console.log(headers)
   };
   
-  const handleClick = () => {
-    try {
-      const response = fetch('http://localhost:5000/login')
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        console.log(data);
-      })
-      .catch(function () {
-        console.log('Booo');
-      });
-      console.log(response.json())
-      const data = response.data;
+  const handleClick = async () => {
+     try {
+      const response = await fetch('http://localhost:5000/login', {
+        redirect: 'follow',
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin':'*'
+        }});
+      const data = response.headers["Authorization"];
       setAccessToken(data["access_token"]);
       setCookie('access_token', data["access_token"], { path: '/' });
       setError(null);
-    } catch (err) {
-      setAccessToken("");
-      setCookie('access_token', '', { path: '/' });
-      setError("Failed to get access token.");
-    }
-  };
-
+        
+      console.log(response.headers);
+        
+      } 
+      catch (error) {
+        setAccessToken("");
+        setCookie('access_token', '', { path: '/' });
+        setError("Failed to get access token.");
+        console.error('Error fetching data:', error);
+        console.log("Can't get access token")
+        return null;
+      }
+  }; 
   
-
   return (
     <nav>
       <div className='navbar'>
