@@ -8,6 +8,7 @@ import { Post_app_context } from './pages/post_app_context';
 import { Put } from './pages/put';
 import { Post_obtain_app_loc_availability } from './pages/post_obtain_app_loc_availability';
 import { Notifications } from './pages/notifications';
+import { Login }  from './pages/login';
 
 function Home() {
 
@@ -18,14 +19,38 @@ function Home() {
           <div className='partners'>
             <h4>Partners</h4>
             <div className="column">
-              <img  src={require('./images/dstelecom.png')} alt="dstelecom" className="partner_imgs" />
-              <img  src={require('./images/bee.png')} alt="bee" className="partner_imgs" />
-              <img  src={require('./images/fapajal.png')} alt="fapajal" className="partner_imgs" />
+              <div className='image-text'>
+                <img  src={require('./images/dstelecom.png')} alt="dstelecom" className="partner_imgs"/>
+                <h4>DSTELECOM S.A.</h4>
+                <h4>Leader Company</h4>
+              </div>
+              <div className='image-text'>
+                <img  src={require('./images/bee.png')} alt="bee" className="partner_imgs" />
+                <h4>Bee Engineering S.A.</h4>
+                <h4>Company</h4>
+              </div>
+              <div className='image-text'>
+                <img  src={require('./images/fapajal.png')} alt="fapajal" className="partner_imgs" />
+                <h4>FAPAJAL PAPERMAKING S.A.</h4>
+                <h4>Company</h4>
+              </div>
             </div>
             <div className="column">
-              <img  src={require('./images/bySteel.png')} alt="bySteel" className="partner_imgs" />
-              <img  src={require('./images/uMinho.png')} alt="uMinho" className="partner_imgs" />
-              <img  src={require('./images/it.png')} alt="it" className="partner_imgs" />
+              <div className='image-text'>
+                <img  src={require('./images/bySteel.png')} alt="bySteel" className="partner_imgs" />
+                <h4>BYSTEEL FS S.A</h4>
+                <h4>Company</h4>
+              </div>
+              <div className="column">
+                <img  src={require('./images/uMinho.png')} alt="uMinho" className="partner_imgs" />
+                <h4>University of Minho</h4>
+                <h4>Academia</h4>
+              </div>
+              <div className="column">
+                <img  src={require('./images/it.png')} alt="it" className="partner_imgs" />
+                <h4>Instituto de Telecomunicações</h4>
+                <h4>Academia</h4>
+              </div>
             </div>
           </div>
 
@@ -86,6 +111,7 @@ function App() {
             element={<Post_obtain_app_loc_availability />}
           />
           <Route path='/notifications' element={<Notifications />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </Router>
     </div>
