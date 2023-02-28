@@ -10,6 +10,7 @@
 .page {
   background-color: #04FCE4;
   height: 100%;
+  overflow-y: auto;
 }
 
 .partner_imgs {
@@ -25,14 +26,13 @@ body {
 }
 
 .footer {
-  position: fixed;
   bottom: 0;
   width: 100%;
   height: 100px;
   background-color: #5324A3;
   text-align: center !important;
   line-height: 1px;
-  font-family:'Space Mono', monospace;;
+  font-family: 'Space Mono', monospace;
   font-size: 10px;
   display: flex;
   flex-direction: column;
@@ -56,15 +56,15 @@ body {
 }
 
 .cofinanced {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   height: 100px;
   background-color: #FFFFFF;
   text-align: center !important;
-  line-height: 1px;
-  font-family:'Space Mono', monospace;;
-  margin-bottom: 130px;
+  line-height: 1.5px;
+  font-family: 'Space Mono', monospace;
+  margin-bottom: 0px;
+  padding-bottom: 20px;
+  display: flow-root;
 }
 
 .compete2020, .portugal2020, .europa{
@@ -95,7 +95,7 @@ body {
   justify-content: flex-start;
   align-items: center;
   text-align: left;
-  margin-bottom: 20px;
+  z-index: 1;
 }
 
 .navbar .links {
@@ -217,11 +217,11 @@ button {
 
 .get, .post, .put, .delete, .notifications{
   margin-top: 20px;
+  margin-left: 15%;
   width: 150vh;
   height: auto;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
   justify-content: center;
   border-radius: 30px 30px 30px 30px;
   margin-bottom: 20px;
