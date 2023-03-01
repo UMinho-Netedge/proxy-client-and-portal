@@ -1,45 +1,18 @@
-import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
 export const Navbar = () => {
-  const [accessToken, setAccessToken] = useState("");
-  const [error, setError] = useState(null);
-  const [cookies, setCookie] = useCookies(['access_token']);
 
-  //  const openLogin = () => {
-  //    window.open('http://localhost:5000/login', '_blank', 'noreferrer');
-  //    // const headers = getAllResponseHeaders();
-  //    // console.log(headers)
-  //  };
-  
-  // const handleClick = async () => {
-  //    try {
-  //     const response = await fetch('http://localhost:5000/login', {
-  //       redirect: 'follow',
-  //       mode: 'no-cors',
-  //       headers: {
-  //         'Access-Control-Allow-Origin':'*'
-  //       }});
-  //     const data = response.headers["Authorization"];
-  //     setAccessToken(data["access_token"]);
-  //     setCookie('access_token', data["access_token"], { path: '/' });
-  //     setError(null);
-        
-  //     console.log(response.headers);
-        
-  //     } 
-  //     catch (error) {
-  //       setAccessToken("");
-  //       setCookie('access_token', '', { path: '/' });
-  //       setError("Failed to get access token.");
-  //       console.error('Error fetching data:', error);
-  //       console.log("Can't get access token")
-  //       return null;
-  //     }
-  // }; 
-  
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'username']);
+  const username = cookies.username;
+
+  const handleLogout = () => {
+    removeCookie('access_token');
+    removeCookie('username');
+  }
+
   return (
     <nav>
       <div className='navbar'>
@@ -64,14 +37,21 @@ export const Navbar = () => {
           <Link className='notifications_link' to="/notifications"> NOTIFICATIONS </Link>
         </div>
         <div className="button-container">
-          <Link to="/login">          
-            <button className="text-image-button">
-              <img src={'./google-logo.png'} alt="GoogleLogo"/>
-              <span>Login</span>
-            </button>
+          <Link to="/login">
+            {username ?
+              <button className="login-button" onClick={handleLogout}>
+                <span>{username}</span>
+              </button>
+              :
+              <button className="login-button">
+                <span>Login</span>
+              </button>
+            }
           </Link>
         </div>
       </div>
     </nav>
   );
 }
+
+export default Navbar;
