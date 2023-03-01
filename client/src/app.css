@@ -107,7 +107,7 @@ body {
   font-weight: bold;
 }
 
-.text-image-button{
+.login-button{
   width: 80px;
   border: 20px #AB5EEC;
   padding: 5px;
@@ -125,13 +125,7 @@ body {
   justify-content: flex-end;
 }
 
-.text-image-button img {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-.text-image-button span {
+.login-button span {
   font-family:'Space Mono', sans-serif;
   font-size: 13px;
   text-decoration: none;
