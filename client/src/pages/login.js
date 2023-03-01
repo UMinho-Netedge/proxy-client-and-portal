@@ -8,19 +8,24 @@ export const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch(url, {
-      mode: 'no-cors',
+      mode: 'cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin':'*'
+        'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ username, password }),
     })
-      .then(response => {
-        console.log("Success")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success');
+        // Save the access token in a cookie
+        document.cookie = `access_token=${data.access_token}; path=/;`;
+        document.cookie = `username=${username}; path=/;`;
+        window.location.href = "/"
       })
-      .catch(error => {
-        console.log("Error")
+      .catch((error) => {
+        console.log('Error');
       });
   };
 
@@ -28,12 +33,22 @@ export const Login = () => {
     <form onSubmit={handleSubmit}>
       <label>
         Username:
-        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input
+          type="text"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
       </label>
       <br />
       <label>
         Password:
-        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </label>
       <br />
       <button type="submit">Submit</button>
