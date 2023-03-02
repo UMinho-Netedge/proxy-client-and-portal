@@ -20,6 +20,58 @@
   object-fit: cover;
 }
 
+.image-text {
+  display: inline-block;
+  width: 30%;
+  margin: 10px;
+}
+
+.partner-row {
+  text-align: center;
+}
+
+.partner-row .image-text {
+  display: inline-block;
+  width: auto;
+  margin: 10px;
+}
+
+.partner-row::before,
+.partner-row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 768px) {
+  .image-text {
+    width: 100%;
+  }
+}
+
+.company_name {
+  font-family: 'Source Code Pro',monospace;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 900;
+    text-transform: none;
+    color: #000;
+}
+
+.company {
+  font-family: 'Source Sans Pro',monospace;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+}
+
+.partners_text {
+  font-family: 'Source Sans Pro',monospace;
+  font-size: 26px;
+  line-height: 24px;
+  color: #000;
+}
+
 body {
   margin: 0;
   padding: 0;
