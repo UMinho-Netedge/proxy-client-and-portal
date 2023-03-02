@@ -13,6 +13,19 @@
   overflow-y: auto;
 }
 
+.welcome{
+  background-color: #FFFFFF;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.welcome_text {
+  font-family: 'Source Sans Pro',monospace;
+  font-size: 26px;
+  color: #000;
+}
+
 .partner_imgs {
   width: 88px;
   height: 88px;
@@ -58,18 +71,36 @@
     color: #000;
 }
 
-.company {
+.company, .logout_message, .credentials_text {
   font-family: 'Source Sans Pro',monospace;
   font-size: 16px;
   line-height: 24px;
+}
+
+.company, .logout_message{
   color: #000;
 }
 
 .partners_text {
+  padding-top: 20px;
   font-family: 'Source Sans Pro',monospace;
   font-size: 26px;
   line-height: 24px;
   color: #000;
+}
+
+.credentials_text{
+color: #04FCE4;
+}
+
+.username, .password {
+  font-family: 'Source Sans Pro',monospace;
+  color: #AB5EEC;
+}
+
+.credentials_div {
+  margin-top: 50px;
+  background-color: #2C1C74;
 }
 
 body {
@@ -171,13 +202,24 @@ body {
   margin-right: 20px;
 }
 
+.logout-confirm, .logout-cancel, .submit_login{
+  width: 80px;
+  border: 20px #AB5EEC;
+  padding: 5px;
+  background-color: #04FCE4;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
 .button-container {
   display: flex;
   flex-grow: 1;
   justify-content: flex-end;
 }
 
-.login-button span {
+.login-button span, .logout-confirm, .logout-cancel, .submit_login {
   font-family:'Space Mono', sans-serif;
   font-size: 13px;
   text-decoration: none;
