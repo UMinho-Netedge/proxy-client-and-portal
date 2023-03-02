@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import { LogoutConfirmation } from './pages/logout_confirmation';
 
 export const Navbar = () => {
-
   const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'username']);
   const username = cookies.username;
 
+  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
+
   const handleLogout = () => {
+    showLogoutDialog();
     removeCookie('access_token');
     removeCookie('username');
-  }
+    window.location.href = "/"
+
+  };
+
+  const showLogoutDialog = () => {
+    setShowLogoutConfirmation(true);
+  };
+
+  const hideLogoutDialog = () => {
+    setShowLogoutConfirmation(false);
+  };
 
   return (
     <nav>
@@ -37,21 +49,24 @@ export const Navbar = () => {
           <Link className='notifications_link' to="/notifications"> NOTIFICATIONS </Link>
         </div>
         <div className="button-container">
-          <Link to="/login">
-            {username ?
-              <button className="login-button" onClick={handleLogout}>
-                <span>{username}</span>
-              </button>
-              :
+          {username ? (
+            <button className="login-button" onClick={showLogoutDialog}>
+              <span>Logout</span>
+            </button>
+          ) : (
+            <Link to="/login">
               <button className="login-button">
                 <span>Login</span>
               </button>
-            }
-          </Link>
+            </Link>
+          )}
         </div>
       </div>
+      {showLogoutConfirmation && (
+        <LogoutConfirmation handleLogout={handleLogout} cancelLogout={hideLogoutDialog} />
+      )}
     </nav>
   );
-}
+};
 
 export default Navbar;
