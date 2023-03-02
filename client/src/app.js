@@ -8,12 +8,25 @@ import { Post_app_context } from './pages/post_app_context';
 import { Put } from './pages/put';
 import { Post_obtain_app_loc_availability } from './pages/post_obtain_app_loc_availability';
 import { Notifications } from './pages/notifications';
-import { Login }  from './pages/login';
+import { Login } from './pages/login';
+import { useCookies } from 'react-cookie';
 
 function Home() {
+
+  const [cookies] = useCookies(['username']);
+  const username = cookies.username;
+
+
   if (window.location.pathname === '/') {
     return (
       <div className='page'>
+        <div className='welcome'>
+          {username ?
+              <h4 className='welcome_text'>Welcome, {username}!</h4>
+              :
+              <h4 className='welcome_text'>Welcome, please log in...</h4>
+            }
+        </div>
         <div className='partners'>
           <h4 className='partners_text'>Partners</h4>
           <div className='image-text-row'>
