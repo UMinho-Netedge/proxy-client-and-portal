@@ -6,15 +6,32 @@ import { LogoutConfirmation } from './pages/logout_confirmation';
 export const Navbar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'username']);
   const username = cookies.username;
-
+  const access_token = cookies.access_token;
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
+  const url = 'http://127.0.0.1:5000/logout';
 
-  const handleLogout = () => {
-    showLogoutDialog();
-    removeCookie('access_token');
-    removeCookie('username');
-    window.location.href = "/"
-
+  const handleLogout = (event) => {
+    event.preventDefault();
+    fetch(url, {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': `Bearer ${access_token}`,
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success');
+        showLogoutDialog();
+        removeCookie('access_token');
+        removeCookie('username');
+        window.location.href = "/"
+      })
+      .catch((error) => {
+        console.log('Error');
+      });
   };
 
   const showLogoutDialog = () => {
