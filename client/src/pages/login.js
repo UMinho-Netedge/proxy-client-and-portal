@@ -19,7 +19,6 @@ export const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log('Success');
-        // Save the access token in a cookie
         document.cookie = `access_token=${data.access_token}; path=/;`;
         document.cookie = `username=${username}; path=/;`;
         window.location.href = "/"
@@ -30,8 +29,10 @@ export const Login = () => {
   };
 
   return (
+    <div className='credentials_div'>
+      <h4 className='credentials_text'>Please insert your credentials</h4>
     <form onSubmit={handleSubmit}>
-      <label>
+      <label className='username'>
         Username:
         <input
           type="text"
@@ -41,7 +42,7 @@ export const Login = () => {
         />
       </label>
       <br />
-      <label>
+      <label className='password'>
         Password:
         <input
           type="password"
@@ -51,8 +52,9 @@ export const Login = () => {
         />
       </label>
       <br />
-      <button type="submit">Submit</button>
+      <button className='submit_login' type="submit">Submit</button>
     </form>
+    </div>
   );
 };
 
