@@ -10,19 +10,27 @@ export const Navbar = () => {
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const url = 'http://127.0.0.1:5000/logout';
 
+  // const handleLogout = () => {
+  //   showLogoutDialog();
+  //   removeCookie('access_token');
+  //   removeCookie('username');
+  //   window.location.href = "/"
+  // }
+
   const handleLogout = (event) => {
+    console.log(access_token)
     event.preventDefault();
     fetch(url, {
-      mode: 'cors',
+      mode: 'no-cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Authorization': `Bearer ${access_token}`,
-      }
+      },
+      body: JSON.stringify(access_token),
     })
-      .then((response) => response.json())
-      .then((data) => {
+      .then((response) => response.text())
+      .then(() => {
         console.log('Success');
         showLogoutDialog();
         removeCookie('access_token');
@@ -30,6 +38,7 @@ export const Navbar = () => {
         window.location.href = "/"
       })
       .catch((error) => {
+        console.log(error)
         console.log('Error');
       });
   };
