@@ -8,7 +8,7 @@ export const Post_obtain_app_loc_availability = () => {
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
-  const url = "http://127.0.0.1:5005/obtain_app_loc_availability"
+  const url = `${process.env.REACT_APP_API_URL}/obtain_app_loc_availability`
   const [cookies] = useCookies(['access_token']);
   const access_token = cookies.access_token;
   
