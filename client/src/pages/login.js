@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const url = 'http://127.0.0.1:5000/login';
+  const url = `${process.env.REACT_APP_API_URL}/login`;
 
   const handleSubmit = (event) => {
     event.preventDefault();
