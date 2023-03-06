@@ -10,6 +10,7 @@ export const Delete = () => {
     const [input, setInput] = useState("");
     const [cookies] = useCookies(['access_token']);
     const access_token = cookies.access_token;
+    
 
     const handleChange = event => {
         setInput(event.target.value.trim());
@@ -29,7 +30,7 @@ export const Delete = () => {
           }
         };
 
-        const outputText = await axios.delete(`http://127.0.0.1:5005/app_contexts/${input}`, config);
+        const outputText = await axios.delete(`${process.env.REACT_APP_REQUESTS}/app_contexts/${input}`, config);
         setResponseData(JSON.stringify(outputText.data["body"]))
         setOutputText(outputText.data["status"]);
     };
