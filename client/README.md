@@ -1,95 +1,70 @@
-# Proxy Client and Portal
+# Getting Started with Create React App
 
-## Introduction
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Interface the MX2 for the UMinho-Netedge MEC environment. 
+## Available Scripts
 
-## Folders and Files Description 
+In the project directory, you can run:
 
-### Client Folder
+### `npm start`
 
-1. Environment variables - .env;
-2. Source folder (src):
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-    | File             | Description      |
-    | ---------------- | ---------------- |
-    | app.css          | Cascading style sheets for the interface |
-    | app.js           | Home page structure |
-    | index.js         | Entry point for the app |
-    | navbar.js        | Navbar structure and logout function |
-    | StateHooks.js    | most common state hooks used |
-    
-#### Source Folder 
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-3. Images folder (images) - all images used 
-4. Pages folder (pages): 
+### `npm test`
 
-    | File                                   | Description |
-    | -------------------------------------- | ----------- |
-    | delete.js                              | Functions related to the delete request and page structure |
-    | get.js                                 | Functions related to the get request and page structure |
-    | login.js                               | Functions related to the login and page structure |
-    | logout_confirmation.js                 | Functions related to the logout confirmation and page structure |
-    | notifications.js                       | Functions related to the notifications and page structure |
-    | post_app_context.js                    | Functions related to the post app context request and page structure |
-    | post_obtain_app_loc_availability.js    | Functions related to the post app location availability request and page structure |
-    | put.js                                 | Functions related to the put request and page structure |
-    
-### Server Folder
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-5. Docker directory containing Dockerfile and docker-compose configuration files (docker).
-6. Scripts directory containing files to delete and execute the app (scripts). 
-7. Flask application file - app.py;
-8. System requirements - requirements.txt;
-9. Source folder (src):
+### `npm run build`
 
-    | File        | Description |
-    | ----------- | ----------- |
-    | enums.py    | Enumerated types |
-    | error.py    | Classes and functions realted to errors |
-    | models.py   | Validation classes for the data structures |
-    | schemas.py  | Data structures schema |
-    | utils.py    | Classes and functions for several files|
-    
-## How to use it 
-To run it, you must first have a Kubernetes cluster configured and Helm installed, in our case, we use minikube v1.29.0 and Helm v3.11.1.
-You must have Node and NPM installed, we use node v18.14.2 and v9.5.0.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Server side 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### To run it
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-```
-$ cd ..
-$ docker login
-$ docker build -f ./docker/Dockerfile -t uminhonetedge/proxy_client:latest .
-$ docker push uminhonetedge/proxy_client:latest
-$ cd docker
-$ docker-compose up 
-```
-### Delete it 
-```
-$ cd .. 
-$ cd docker 
-$ docker compose down 
-$ docker volume rm $(docker volume ls -q)
-$ docker image rm uminhonetedge/proxy_client:
-```
+### `npm run eject`
 
-## Client side 
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-### To run it
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-```
-$ npm install
-$ $env:PORT=3001
-$ npm start
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-```
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Notes 
-* The port on the client side can be changed.
-* After the first time, you can just run "docker-compose up" on the server side and, on the client side, you don't need to run "npm install"
+## Learn More
 
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
+To learn React, check out the [React documentation](https://reactjs.org/).
 
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
