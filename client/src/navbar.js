@@ -8,14 +8,7 @@ export const Navbar = () => {
   const username = cookies.username;
   const access_token = cookies.access_token;
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
-  const url = 'http://127.0.0.1:5000/logout';
-
-  // const handleLogout = () => {
-  //   showLogoutDialog();
-  //   removeCookie('access_token');
-  //   removeCookie('username');
-  //   window.location.href = "/"
-  // }
+  const url = `${process.env.REACT_APP_API_URL}/logout`;
 
   const handleLogout = (event) => {
     console.log(access_token)
