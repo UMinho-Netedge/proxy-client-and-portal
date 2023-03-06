@@ -13,7 +13,7 @@ export const Get = () => {
   const [appSoftVersion, setAppSoftVersion] = useState("");
   const [vendorId, setVendorId] = useState("");
   const [serviceCont, setServiceCont] = useState("");
-  const url = "http://127.0.0.1:5005/app_list";
+  const url = `${process.env.REACT_APP_REQUESTS}/app_list`;
   const [cookies] = useCookies(['access_token']);
   const access_token = cookies.access_token;
 
