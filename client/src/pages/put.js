@@ -30,7 +30,7 @@ export const Put = () => {
         }
       };
 
-      const outputText = await axios.put(`http://127.0.0.1:5005/app_contexts/${input}`, data, config);
+      const outputText = await axios.put(`${process.env.REACT_APP_API_URL}/app_contexts/${input}`, data, config);
       setResponseData(JSON.stringify(outputText.data["body"]))
       setOutputText(outputText.data["status"]);
   };
