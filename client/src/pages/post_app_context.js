@@ -8,7 +8,8 @@ export const Post_app_context = () => {
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
-  const url = "http://127.0.0.1:5005/app_contexts"
+  const url = `${process.env.REACT_APP_API_URL}/app_contexts`
+
   const [cookies] = useCookies(['access_token']);
   const access_token = cookies.access_token;
 
