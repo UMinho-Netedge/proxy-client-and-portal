@@ -6,7 +6,7 @@ export const Notifications = () => {
     const [responseData, setResponseData] = useState("");
     const [responseTime, setResponseTime] = useState("");
     const [responseContextId, setResponseContextId] = useState("");
-    const url = `${process.env.REACT_APP_API_URL}/notifications`
+    const url = `${process.env.REACT_APP_REQUESTS}/notifications`
 
     useEffect(() => {
         axios.get(url)
