@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, jsonify
+import os
 import requests
 from pymongo import MongoClient
 from src.schemas import *
@@ -9,7 +10,17 @@ import datetime
 
 app = Flask(__name__)
 
-client = MongoClient("mongodb://mongodb_client:27018/")
+# mx2 server (UALCMP)
+ualcmp_addr = os.environ.get("UALCMP_SERVER")
+ualcmp_port = os.environ.get("UALCMP_PORT")
+url = "http://%s:%s/" %(ualcmp_addr, ualcmp_port)
+
+# dados predefinidos no docker compose
+mongodb_addr = os.environ.get("ME_CONFIG_MONGODB_SERVER")
+mongodb_port = int (os.environ.get("ME_CONFIG_MONGODB_PORT"))
+mongodb_username = os.environ.get("ME_CONFIG_MONGODB_ADMINUSERNAME")
+mongodb_password = os.environ.get("ME_CONFIG_MONGODB_ADMINPASSWORD")
+client = MongoClient(host=mongodb_addr, port=mongodb_port, username=mongodb_username, password=mongodb_password)
 
 db = client["mydatabase"]
 AddressChange = db["AddressChange"]
@@ -29,14 +40,17 @@ def test_connection():
     except:
         return 500
 
-url = "http://host.docker.internal:8080"
+
 @app.route('/app_list', methods=['GET'])
 def def_app_list():
     token = request.headers.get("access_token")
 
     query_params = request.args.to_dict()
+    headers = {'Authorization' : f'Bearer {token}'}
 
-    response = requests.get(url + '/app_list', params=query_params, headers={"access_token": token})
+    app.logger.info('HEADERS:\t%s' %headers)
+
+    response = requests.get(url + '/app_list', params=query_params, headers=headers)
 
     try:
         response_json = response.json()
@@ -182,5 +196,4 @@ def page_not_found(e):
 def page_not_found(e):
     return Error.error_404()
 
-if __name__ == '__main__':
-    app.run(host = "0.0.0.0", port = 5005, debug = True)
+app.run(host = "0.0.0.0", port = 5005, debug = True)
