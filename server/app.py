@@ -13,7 +13,7 @@ app = Flask(__name__)
 # mx2 server (UALCMP)
 ualcmp_addr = os.environ.get("UALCMP_SERVER")
 ualcmp_port = os.environ.get("UALCMP_PORT")
-url = "http://%s:%s/" %(ualcmp_addr, ualcmp_port)
+url = "http://%s:%s" %(ualcmp_addr, ualcmp_port)
 
 # dados predefinidos no docker compose
 mongodb_addr = os.environ.get("ME_CONFIG_MONGODB_SERVER")
@@ -22,7 +22,7 @@ mongodb_username = os.environ.get("ME_CONFIG_MONGODB_ADMINUSERNAME")
 mongodb_password = os.environ.get("ME_CONFIG_MONGODB_ADMINPASSWORD")
 client = MongoClient(host=mongodb_addr, port=mongodb_port, username=mongodb_username, password=mongodb_password)
 
-db = client["mydatabase"]
+db = client["ualcmp-client"]
 AddressChange = db["AddressChange"]
 AppContextDelete = db["AppContextDelete"]
 AppContextUpdate = db["AppContextUpdate"]
@@ -40,17 +40,41 @@ def test_connection():
     except:
         return 500
 
+@app.route('/login', methods=['POST'])
+def get_credentials():
+    if request.method == 'POST':
+        app.logger.info('received a login request')
+        credentials = request.json
+        response = requests.post(url + '/login', json=credentials)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return Error.error_401(response.json())
+
+@app.route('/logout', methods=['POST'])
+def remove_credentials():
+    app.logger.info('received a logout request')
+    body = request.get_json()
+    token = request.headers.get("access_token")
+    response = requests.post(url + '/logout', json=body, headers={"access_token":token})
+
+    app.logger.info(response.text)
+    if response.status_code == 200:
+        return response.text
+    else:
+        return Error.error_401(response.json())
+
 
 @app.route('/app_list', methods=['GET'])
 def def_app_list():
     token = request.headers.get("access_token")
 
     query_params = request.args.to_dict()
-    headers = {'Authorization' : f'Bearer {token}'}
+    # headers = {'Authorization' : f'Bearer {token}'}
 
-    app.logger.info('HEADERS:\t%s' %headers)
+    # app.logger.info('HEADERS:\t%s' %headers)
 
-    response = requests.get(url + '/app_list', params=query_params, headers=headers)
+    response = requests.get(url + '/app_list', params=query_params, headers={"access_token":token})
 
     try:
         response_json = response.json()
