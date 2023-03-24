@@ -49,32 +49,35 @@ def get_credentials():
         if response.status_code == 200:
             return response.json()
         else:
-            return Error.error_401(response.json())
+            return Error.error_401(response.text)
 
 @app.route('/logout', methods=['POST'])
 def remove_credentials():
-    app.logger.info('received a logout request')
-    body = request.get_json()
-    token = request.headers.get("access_token")
-    response = requests.post(url + '/logout', json=body, headers={"access_token":token})
+    auth_header = request.headers.get('Authorization')
+    headers = {'Authorization' : auth_header}
+    app.logger.info('received a logout request from: %s' %headers)
+    response = requests.post(url + '/logout', headers=headers)
 
     app.logger.info(response.text)
     if response.status_code == 200:
         return response.text
     else:
-        return Error.error_401(response.json())
+        return Error.error_401(response.text)
 
 
 @app.route('/app_list', methods=['GET'])
 def def_app_list():
-    token = request.headers.get("access_token")
+    
+    auth_header = request.headers.get('Authorization')
+    headers = {'Authorization' : auth_header}
+    app.logger.info('received a get app list request from: %s' %headers)
 
     query_params = request.args.to_dict()
     # headers = {'Authorization' : f'Bearer {token}'}
 
     # app.logger.info('HEADERS:\t%s' %headers)
 
-    response = requests.get(url + '/app_list', params=query_params, headers={"access_token":token})
+    response = requests.get(url + '/app_list', params=query_params, headers=headers)
 
     try:
         response_json = response.json()
@@ -89,8 +92,10 @@ def def_app_list():
 @app.route('/app_contexts', methods=['POST'])
 def def_context_id():
     body = request.get_json()
-    token = request.headers.get("access_token")
-    response = requests.post("%s/app_contexts" % (url), json=body, headers={"access_token":token})
+    auth_header = request.headers.get('Authorization')
+    headers = {'Authorization' : auth_header}
+    app.logger.info('received a post context request from: %s' %headers)
+    response = requests.post("%s/app_contexts" % (url), json=body, headers=headers)
 
     try:
         response_json = response.json()
@@ -108,8 +113,10 @@ def def_context_id():
 @app.route('/app_contexts/<contextId>', methods=['PUT'])
 def put_contexts(contextId):
     body = request.get_json()
-    token = request.headers.get("access_token")
-    response = requests.put('%s/app_contexts/%s' % (url, contextId), json=body, headers={"access_token":token})
+    auth_header = request.headers.get('Authorization')
+    headers = {'Authorization' : auth_header}
+    app.logger.info('received a put context request from: %s' %headers)
+    response = requests.put('%s/app_contexts/%s' % (url, contextId), json=body, headers=headers)
 
     try:
         response_json = response.json()
@@ -123,8 +130,10 @@ def put_contexts(contextId):
 
 @app.route('/app_contexts/<contextId>', methods=['DELETE'])
 def del_contexts(contextId):
-    token = request.headers.get("access_token")
-    response = requests.delete('%s/app_contexts/%s' % (url, contextId), headers={"access_token":token})
+    auth_header = request.headers.get('Authorization')
+    headers = {'Authorization' : auth_header}
+    app.logger.info('received a delete context request from: %s' %headers)
+    response = requests.delete('%s/app_contexts/%s' % (url, contextId), headers=headers)
 
     try:
         response_json = response.json()
@@ -142,8 +151,10 @@ def del_contexts(contextId):
 @app.route('/obtain_app_loc_availability', methods=['POST'])
 def def_obtain_app_loc_availability():
     body = request.get_json()
-    token = request.headers.get("access_token")
-    response = requests.post("%s/obtain_app_loc_availability" % (url), json=body, headers={"access_token":token})
+    auth_header = request.headers.get('Authorization')
+    headers = {'Authorization' : auth_header}
+    app.logger.info('received a obtain app loc availability request from: %s' %headers)
+    response = requests.post("%s/obtain_app_loc_availability" % (url), json=body, headers=headers)
 
     try:
         response_json = response.json()

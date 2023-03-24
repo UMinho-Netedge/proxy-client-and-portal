@@ -26,7 +26,7 @@ export const Post_obtain_app_loc_availability = () => {
 
     const config = {
       headers: {
-        "access_token": access_token
+        'Authorization': 'Bearer ' + access_token
       }
     };
 

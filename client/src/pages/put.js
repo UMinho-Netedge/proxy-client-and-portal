@@ -30,7 +30,7 @@ export const Put = () => {
       
       const config = {
         headers: {
-          "access_token": access_token
+          'Authorization': 'Bearer ' + access_token
         }
       };
 

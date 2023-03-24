@@ -30,7 +30,7 @@ export const Delete = () => {
 
         const config = {
           headers: {
-            "access_token": access_token
+            'Authorization': 'Bearer ' + access_token
           }
         };
 

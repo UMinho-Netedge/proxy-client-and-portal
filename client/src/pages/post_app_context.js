@@ -27,7 +27,7 @@ export const Post_app_context = () => {
 
     const config = {
       headers: {
-        "access_token": access_token
+        'Authorization': 'Bearer ' + access_token
       }
     };
 
