@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
+var myCookies = require('cookie.js');
 
 export const Get = () => {
+
+  myCookies.checkAccessToken();
+
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useState("");
   const [isOpen, setIsOpen] = useState(false);

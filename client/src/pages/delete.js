@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { useOutputTextState, useShowOutputState } from '../stateHooks';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
+var myCookies = require('cookie.js');
 
 export const Delete = () => {
+
+    myCookies.checkAccessToken();   
+  
     const [responseData, setResponseData] = useState("");
     const [outputText, setOutputText] = useOutputTextState();
     const [showOutput, setShowOutput] = useShowOutputState();

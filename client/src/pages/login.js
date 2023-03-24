@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const project = "default_project"
   const url = `${process.env.REACT_APP_API_URL}/login`;
 
   const handleSubmit = (event) => {
@@ -14,12 +15,18 @@ export const Login = () => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, project }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('Success');
-        document.cookie = `access_token=${data.access_token}; path=/;`;
+
+        // get refresh token
+        console.debug("ACCESS:TOKEN" + data.refresh_token);
+        console.debug("REFRESH_TOKEN: " + data.refresh_token);
+
+        document.cookie = `access_token=${data.access_token}; expires=${data.expires} path=/;`;
+        document.cookie = `refresh_token=${data.refresh_token}; path=/;`;
         document.cookie = `username=${username}; path=/;`;
         window.location.href = "/"
       })

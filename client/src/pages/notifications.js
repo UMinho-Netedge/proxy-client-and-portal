@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+var myCookies = require('cookie.js');
 
 export const Notifications = () => {
+
+    myCookies.checkAccessToken();
+
     const [outputText, setOutputText] = useState("");
     const [responseData, setResponseData] = useState("");
     const [responseTime, setResponseTime] = useState("");

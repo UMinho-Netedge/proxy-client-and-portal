@@ -27,6 +27,7 @@ export const Navbar = () => {
         console.log('Success');
         showLogoutDialog();
         removeCookie('access_token');
+        //removeCookie('refresh_token');
         removeCookie('username');
         window.location.href = "/"
       })
