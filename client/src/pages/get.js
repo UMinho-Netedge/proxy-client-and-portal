@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-var myCookies = require('cookie.js');
+var myCookies = require('./cookie.js');
 
 export const Get = () => {
 

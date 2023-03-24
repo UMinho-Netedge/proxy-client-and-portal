@@ -11,23 +11,24 @@ export const Navbar = () => {
   const url = `${process.env.REACT_APP_API_URL}/logout`;
 
   const handleLogout = (event) => {
-    console.log(access_token)
-    event.preventDefault();
+    console.debug('ACCESS_TOKEN: ',access_token)
+    console.log('ACCESS TOKEN: ', access_token)
+    //event.preventDefault();
     fetch(url, {
-      mode: 'no-cors',
+      mode: 'cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify(access_token),
+        'Authorization': 'Bearer ' + access_token
+      }
     })
       .then((response) => response.text())
       .then(() => {
         console.log('Success');
         showLogoutDialog();
         removeCookie('access_token');
-        //removeCookie('refresh_token');
+        removeCookie('refresh_token');
         removeCookie('username');
         window.location.href = "/"
       })

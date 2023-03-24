@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useOutputTextState, useShowOutputState } from '../stateHooks';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-var myCookies = require('cookie.js');
+var myCookies = require('./cookie.js');
 
 export const Put = () => {
 
-  var myCookies = require('cookie.js');
+  myCookies.checkAccessToken();
 
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-var myCookies = require('cookie.js');
+var myCookies = require('./cookie.js');
 
 export const Notifications = () => {
 

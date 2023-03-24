@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {useShowOutputState, useOutputTextState} from '../stateHooks';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-var myCookies = require('cookie.js');
+var myCookies = require('./cookie.js');
 
 export const Post_app_context = () => {
 
