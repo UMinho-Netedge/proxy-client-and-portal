@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from src.schemas import *
 from src.models import *
 from src.error import Error
+from src.performance import *
 from flask_cors import CORS
 import datetime
 
@@ -191,6 +192,20 @@ def add_log(body, statusCode):
         'body': body,
         "status": statusCode
     })
+
+@app.route('/network_report', methods=['POST'])
+def network_report():
+    body = request.get_json()
+
+    try:
+        report = complete_test(body["host_list"], runs=10, interval=10)
+        status = 200
+    except:
+        msg = "Performance test not available!"
+        report, status = Error.error_400(msg)
+
+    return report, status
+
 
 @app.route('/notifications', methods=['GET'])
 def last_request():
