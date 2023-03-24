@@ -59,14 +59,14 @@ def tcp_test(host = "127.0.0.1", port = 5201, runs = 10, interval = 10, timeout 
 
         testInfo["data"] = {
                 "rtt": {
-                    "min" : latencyMin,
-                    "max" : latencyMax,
-                    "avg" : avgValue,
+                    "min" : round(latencyMin,2),
+                    "max" : round(latencyMax,2),
+                    "avg" : round(avgValue,2),
                     "unit" : "ms"
                 },
                 "bandwidth" : {
-                    "upStream" : result.sent_Mbps,
-                    "downStream" : result.received_Mbps,
+                    "upStream" : round(result.sent_Mbps, 2),
+                    "downStream" : round(result.received_Mbps,2),
                     "unit" : "Mbps"
                 }
             }
@@ -120,15 +120,15 @@ def udp_test(host = "127.0.0.1", port = 5201):
         # Return info in json format
         testInfo["data"] = {
             "bandwidth" : {
-                "total" : result.Mbps,
+                "total" : round(result.Mbps,2),
                 "unit" : "Mbps"
             },              
             "jitter" : {
-                "total" : result.jitter_ms,
+                "total" : round(result.jitter_ms,2),
                 "unit" : "ms"
             },
             "packet_loss" : {
-                "percentage" : result.lost_percent
+                "percentage" : round(result.lost_percent, 2)
             }
         } 
 
@@ -191,13 +191,13 @@ def ping_test(host = '127.0.0.1', runs = 10, interval = 10, message_size = 60):
 
     return testInfo
 
-def complete_test(host_list, port, runs = 10, interval = 10):
+def complete_test(host_list, runs = 10, interval = 10):
     """Runs the complete test suit for a list of hosts.
 
     Parameters
     ----------
-    host_list : str (ip)
-        The host list containing the hosts to connect to
+    host_list : list of dict (ip, port)
+        The host list containing dictionaries with hosts and ports to connect to
     port : int
         The port to connect to in every host
     runs : int
@@ -213,23 +213,26 @@ def complete_test(host_list, port, runs = 10, interval = 10):
 
     print("Complete test: using the complete test suit in: " + str(host_list) + "\n")
 
+    ip_list = [d["ip"] for d in host_list]
+    port_list = [d["port"] for d in host_list]
+
     testInfo = {
-        "host_list": host_list,
+        "host_list": ip_list,
         "runs": runs,
         "interval": interval,
         "performance": []
     }
 
     
-    for host in host_list:
+    for i, host in enumerate(ip_list):
 
         resultsInfo = {
             "ip": host,
             "info": []
         }
 
-        tcp_resutls = tcp_test(host, port, runs, interval)
-        udp_results = udp_test(host, port)
+        tcp_resutls = tcp_test(host, port_list[i], runs, interval)
+        udp_results = udp_test(host, port_list[i])
         ping_results = ping_test(host, runs, interval)
 
         resultsInfo["info"].append(tcp_resutls)
@@ -238,4 +241,4 @@ def complete_test(host_list, port, runs = 10, interval = 10):
         
         testInfo["performance"].append(resultsInfo)
     
-    return json.dumps(testInfo, indent = 2) 
+    return json.dumps(testInfo, indent = 2)
