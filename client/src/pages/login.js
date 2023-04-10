@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const project = "default_project"
+  const [project, setProject] = useState('');
+  //const project = "default_project"
   const url = `${process.env.REACT_APP_API_URL}/login`;
 
   const handleSubmit = (event) => {
@@ -56,6 +57,16 @@ export const Login = () => {
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        />
+      </label>
+      <br />
+      <label className='project'>
+        Project:
+        <input
+          type="text"
+          name="project"
+          value={project}
+          onChange={(e) => setProject(e.target.value)}
         />
       </label>
       <br />
