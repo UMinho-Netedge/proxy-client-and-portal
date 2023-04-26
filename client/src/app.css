@@ -93,7 +93,7 @@
 color: #04FCE4;
 }
 
-.username, .password {
+.username, .password, .project {
   font-family: 'Source Sans Pro',monospace;
   color: #AB5EEC;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-var myCookies = require('cookie.js');
+var myCookies = require('./cookie.js');
 
 export const Get = () => {
 
@@ -47,7 +47,7 @@ export const Get = () => {
       }
     }
 
-    axios.get(url, { params: parValue, headers: { 'access_token': access_token } })
+    axios.get(url, { params: parValue, headers: {'Authorization': 'Bearer ' + access_token} })
       .then(response => {
         setResponseData(JSON.stringify(response.data["body"]));
         setOutputText(response.data["status"]);

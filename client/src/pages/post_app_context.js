@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {useShowOutputState, useOutputTextState} from '../stateHooks';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-var myCookies = require('cookie.js');
+var myCookies = require('./cookie.js');
 
 export const Post_app_context = () => {
 
@@ -27,7 +27,7 @@ export const Post_app_context = () => {
 
     const config = {
       headers: {
-        "access_token": access_token
+        'Authorization': 'Bearer ' + access_token
       }
     };
 

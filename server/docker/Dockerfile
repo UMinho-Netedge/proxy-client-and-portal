@@ -7,6 +7,8 @@ RUN pip install -r requirements.txt
 
 COPY . /opt/app
 
+RUN apk add iperf3
+
 ENV PORT 5005
 
 EXPOSE 5005
