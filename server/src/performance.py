@@ -191,7 +191,7 @@ def ping_test(host = '127.0.0.1', runs = 10, interval = 10, message_size = 60):
 
     return testInfo
 
-def complete_test(host_list, runs = 10, interval = 10):
+def complete_test(client, host_list, runs = 10, interval = 10):
     """Runs the complete test suit for a list of hosts.
 
     Parameters
@@ -217,6 +217,7 @@ def complete_test(host_list, runs = 10, interval = 10):
     port_list = [d["port"] for d in host_list]
 
     testInfo = {
+        "client": client,
         "host_list": ip_list,
         "runs": runs,
         "interval": interval,

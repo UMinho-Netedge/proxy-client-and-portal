@@ -209,7 +209,7 @@ def network_report():
     body = request.get_json()
 
     try:
-        report = complete_test(body["host_list"], runs=body["runs"], interval=body["interval"])
+        report = complete_test(client, body["host_list"], runs=body["runs"], interval=body["interval"])
         status = 200
     except Exception as e:
         # msg = "Performance test not available!"
