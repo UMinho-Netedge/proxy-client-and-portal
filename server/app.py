@@ -1,6 +1,7 @@
 from flask import Flask, request, Response, jsonify
 import os
 import requests
+import threading
 from pymongo import MongoClient
 from src.schemas import *
 from src.models import *
@@ -209,13 +210,21 @@ def network_report():
     body = request.get_json()
 
     try:
-        report = complete_test(client, body["host_list"], runs=body["runs"], interval=body["interval"])
+        thread = threading.Thread(target=network_report_thread, args=(body["host_list"], body["runs"], body["interval"]))
+        thread.start()
+        report = "Performance test started!"
         status = 200
     except Exception as e:
         # msg = "Performance test not available!"
         report, status = Error.error_400(str(e))
 
     return report, status
+
+     
+def network_report_thread(host_list, runs, interval):
+    report = complete_test(host_list, runs, interval)
+    requests.post("%s/network_performance_results" % (url), json=report)
+
 
 
 @app.route('/notifications', methods=['GET'])
