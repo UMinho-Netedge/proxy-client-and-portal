@@ -13,25 +13,31 @@ import { useCookies } from 'react-cookie';
 
 function Home() {
 
-  const [cookies] = useCookies(['username']);
+
+  const [cookies] = useCookies(['access_token', 'username']);
   const username = cookies.username;
+  const access_token = cookies.access_token;
 
 
   if (window.location.pathname === '/') {
     return (
       <div className='page'>
         <div className='welcome'>
-          {username ?
+          {username ? (
+            access_token ? (
               <h4 className='welcome_text'>Welcome, {username}!</h4>
-              :
-              <h4 className='welcome_text'>Welcome, please log in...</h4>
-            }
+            ) : (
+              <h4 className='welcome_text'>Error on Login, please try again..</h4>
+            )
+          ) : (
+            <h4 className='welcome_text'>Welcome, please log in...</h4>
+          )}
         </div>
         <div className='partners'>
           <h4 className='partners_text'>Partners</h4>
           <div className='image-text-row'>
             <div className='image-text'>
-              <img src={require('./images/dstelecom.png')} alt="dstelecom" className="partner_imgs"/>
+              <img src={require('./images/dstelecom.png')} alt="dstelecom" className="partner_imgs" />
               <h4 className='company_name'>DSTELECOM S.A.</h4>
               <h4 className='company'>Leader Company</h4>
             </div>
@@ -75,7 +81,7 @@ function Home() {
           <a href='https://ec.europa.eu/regional_policy/funding/erdf_en?etrans=pt'>
             <img className='europa' src={require('./images/logos-FEDR_.png')} alt='europa' />
           </a>
-       
+
 
         </div>
         <footer className='footer'>
