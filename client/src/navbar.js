@@ -70,7 +70,7 @@ export const Navbar = () => {
           <Link className='notifications_link' to="/notifications"> NOTIFICATIONS </Link>
         </div>
         <div className="button-container">
-          {username ? (
+          {(username && access_token) ? (
             <button className="login-button" onClick={showLogoutDialog}>
               <span>Logout</span>
             </button>

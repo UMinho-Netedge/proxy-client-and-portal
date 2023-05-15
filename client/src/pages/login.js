@@ -32,7 +32,9 @@ export const Login = () => {
         window.location.href = "/"
       })
       .catch((error) => {
+        document.cookie = `username=${username}; path=/;`;
         console.log('Error');
+        window.location.href = "/"
       });
   };
 
