@@ -217,7 +217,7 @@ def complete_test(host_list, runs = 10, interval = 10):
     port_list = [d["port"] for d in host_list]
 
     testInfo = {
-        "host_list": ip_list,
+        "host_list": host_list,
         "runs": runs,
         "interval": interval,
         "performance": []
@@ -241,4 +241,4 @@ def complete_test(host_list, runs = 10, interval = 10):
         
         testInfo["performance"].append(resultsInfo)
     
-    return json.dumps(testInfo, indent = 2)
+    return testInfo

@@ -223,7 +223,8 @@ def network_report():
      
 def network_report_thread(host_list, runs, interval):
     report = complete_test(host_list, runs, interval)
-    requests.post("%s/network_performance_results" % (url), json=report)
+    response = requests.post("%s/network_performance_results" % (url), json=report)
+    app.logger.info(response.text)
 
 
 
