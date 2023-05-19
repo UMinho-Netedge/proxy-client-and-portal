@@ -49,7 +49,7 @@ export const Get = () => {
 
     axios.get(url, { params: parValue, headers: {'Authorization': 'Bearer ' + access_token} })
       .then(response => {
-        setResponseData(JSON.stringify(response.data["body"]));
+        setResponseData(JSON.stringify(response.data["body"], null, 2));
         setOutputText(response.data["status"]);
       })
   }

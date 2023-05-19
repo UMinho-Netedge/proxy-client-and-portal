@@ -14,6 +14,14 @@ class Error:
         responseBody["title"] = "Bad Request"
         responseBody["type"] =  "about:blank" # See this later 
         return responseBody, responseBody["status"]
+    
+    def error_401(detail):
+        responseBody["detail"] = detail 
+        responseBody["instance"] = "application/problem+json"
+        responseBody["status"] = 401
+        responseBody["title"] = "Unauthorized "
+        responseBody["type"] =  "about:blank" # See this later 
+        return responseBody, responseBody["status"]
 
     def error_403(detail):
         responseBody["detail"] = detail
@@ -30,5 +38,3 @@ class Error:
         responseBody["title"] = "Not Found"
         responseBody["type"] =  "about:blank" # See this later 
         return responseBody, responseBody["status"]
-
-

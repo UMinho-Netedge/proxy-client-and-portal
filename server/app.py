@@ -8,14 +8,17 @@ from src.models import *
 from src.error import Error
 from src.performance import *
 from flask_cors import CORS
+from uuid import uuid4
 import datetime
 
 app = Flask(__name__)
 
+
+associateDevAppId = str(uuid4())
 # mx2 server (UALCMP)
 ualcmp_addr = os.environ.get("UALCMP_SERVER")
 ualcmp_port = os.environ.get("UALCMP_PORT")
-url = "http://%s:%s" %(ualcmp_addr, ualcmp_port)
+url = "http://%s:%s/dev_app/v1" %(ualcmp_addr, ualcmp_port)
 
 # dados predefinidos no docker compose
 mongodb_addr = os.environ.get("ME_CONFIG_MONGODB_SERVER")
@@ -25,11 +28,7 @@ mongodb_password = os.environ.get("ME_CONFIG_MONGODB_ADMINPASSWORD")
 client = MongoClient(host=mongodb_addr, port=mongodb_port, username=mongodb_username, password=mongodb_password)
 
 db = client["ualcmp-client"]
-AddressChange = db["AddressChange"]
-AppContextDelete = db["AppContextDelete"]
-AppContextUpdate = db["AppContextUpdate"]
-AppLocationAvailability = db["AppLocationAvailability"]
-ContextId = db["ContextId"]
+Context = db["Contexts"]
 notifications = db['notifications']
 
 CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
@@ -47,11 +46,24 @@ def get_credentials():
     if request.method == 'POST':
         app.logger.info('received a login request')
         credentials = request.json
+        credentials['associateDevAppId'] = associateDevAppId
         response = requests.post(url + '/login', json=credentials)
         if response.status_code == 200:
             return response.json()
         else:
             return Error.error_401(response.text)
+
+@app.route('/refresh', methods=['POST'])
+def update_credentials():
+    auth_header = request.headers.get('Authorization')
+    headers = {'Authorization' : auth_header}
+    app.logger.info('received a refresh token request from: %s' %headers)
+    response = requests.post(url + '/refresh', headers=headers)
+    app.logger.info(response.text)
+    if response.status_code == 200:
+        return response.text
+    else:
+        return Error.error_401(response.text)
 
 @app.route('/logout', methods=['POST'])
 def remove_credentials():
@@ -75,9 +87,6 @@ def def_app_list():
     app.logger.info('received a get app list request from: %s' %headers)
 
     query_params = request.args.to_dict()
-    # headers = {'Authorization' : f'Bearer {token}'}
-
-    # app.logger.info('HEADERS:\t%s' %headers)
 
     response = requests.get(url + '/app_list', params=query_params, headers=headers)
 
@@ -94,27 +103,28 @@ def def_app_list():
 @app.route('/app_contexts', methods=['POST'])
 def def_context_id():
     body = request.get_json()
+    body['associateDevAppId'] = associateDevAppId
     auth_header = request.headers.get('Authorization')
     headers = {'Authorization' : auth_header}
-    app.logger.info('received a post context request from: %s' %headers)
+    app.logger.info('Received a post context request from: %s' %headers)
     response = requests.post("%s/app_contexts" % (url), json=body, headers=headers)
-
+    app.logger.info("App context create response: %s" %response.text)
     try:
         response_json = response.json()
     except:
         response_json = {}
 
     if response.status_code == 201:
-        ContextId.insert_one({"contextId":body["contextId"]})
+        Context.insert_one(response_json)
+    
+    app.logger.info(response_json)
 
-    return jsonify({
-        'status': response.status_code,
-        'body': response_json
-    })
+    return response.json(), response.status_code
 
 @app.route('/app_contexts/<contextId>', methods=['PUT'])
 def put_contexts(contextId):
     body = request.get_json()
+    body['associateDevAppId'] = associateDevAppId
     auth_header = request.headers.get('Authorization')
     headers = {'Authorization' : auth_header}
     app.logger.info('received a put context request from: %s' %headers)
@@ -134,25 +144,20 @@ def put_contexts(contextId):
 def del_contexts(contextId):
     auth_header = request.headers.get('Authorization')
     headers = {'Authorization' : auth_header}
-    app.logger.info('received a delete context request from: %s' %headers)
-    response = requests.delete('%s/app_contexts/%s' % (url, contextId), headers=headers)
-
-    try:
-        response_json = response.json()
-    except:
-        response_json = {}
+    app.logger.info('received a delete context request from: %s\n sending it to %s/app_contexts/%s' %(headers, url, contextId))
+    response = requests.delete('%s/app_contexts/%s' %(url, contextId), headers=headers)
+    app.logger.info(response.text)
 
     if response.status_code == 204:
-        ContextId.delete_one({"contextId":contextId})
+        Context.delete_one({"contextId":contextId})
+        return '', 204
 
-    return jsonify({
-        'status': response.status_code,
-        'body': response_json
-    })
+    return response.json(), response.status_code
 
 @app.route('/obtain_app_loc_availability', methods=['POST'])
 def def_obtain_app_loc_availability():
     body = request.get_json()
+    body['associateDevAppId'] = associateDevAppId
     auth_header = request.headers.get('Authorization')
     headers = {'Authorization' : auth_header}
     app.logger.info('received a obtain app loc availability request from: %s' %headers)
@@ -172,25 +177,20 @@ def def_obtain_app_loc_availability():
 def def_notifications():
     try: 
         body = request.get_json()
+        return_code = 204
         if body["notificationType"] == "AddressChangeNotification":
             data = AddressChangeNotification.from_json(body)
-            AddressChange.insert_one(object_to_mongodb_dict(data.to_json()))  
         elif body["notificationType"] == "AppContextDeleteNotification":
             data = AppContextDeleteNotification.from_json(body)
-            AppContextDelete.insert_one(object_to_mongodb_dict(data.to_json()))
         elif body["notificationType"] == "AppContextUpdateNotification":
             data = AppContextUpdateNotification.from_json(body)
-            AppContextUpdate.insert_one(object_to_mongodb_dict(data.to_json()))
         elif body["notificationType"] == "AppLocationAvailabilityNotification":
             data = AppLocationAvailabilityNotification.from_json(body)
-            AppLocationAvailability.insert_one(object_to_mongodb_dict(data.to_json()))
         else:
-            msg = "Notification type not valid!"
-            return_msg, return_code = Error.error_400(msg)
-            add_log(return_msg, return_code)
-            return return_msg, return_code
-        add_log(body, 204)
-        return Response(status=204)
+            msg = "Notification type not valid. \n %s" %str(body)
+            data, return_code = Error.error_400(msg)
+        add_log(data, return_code)
+        return data, return_code
 
     except:
         msg = "Request body not valid, jsonschema.exceptions.ValidationError"
@@ -235,7 +235,7 @@ def last_request():
         last_request['_id'] = str(last_request['_id'])
         
         contextIdCollection = []
-        for cont in ContextId.find({},{ "_id": 0, "contextId": 1}):
+        for cont in Context.find({},{ "_id": 0, "contextId": 1}):
             contextIdCollection.append(cont["contextId"])
 
         return jsonify(last_request, contextIdCollection)
