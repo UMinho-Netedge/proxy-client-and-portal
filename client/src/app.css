@@ -251,8 +251,8 @@ input, textarea, p {
   color: rgb(70, 70, 70);
   font-size: 16px;
   z-index: 1;
-  width: 400px;
-  text-align: center;
+  width: 600px;
+  text-align: left;
   font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -271,7 +271,7 @@ textarea {
   /* Alterar por uma opção melhor */
   resize: vertical;
   overflow: auto;
-  min-height: 50px;
+  min-height: 100px;
   height: auto;
 }
 
