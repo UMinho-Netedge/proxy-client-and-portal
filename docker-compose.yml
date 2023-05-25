@@ -29,7 +29,7 @@ services:
       - client
     links:
       - client
-    image: uminhonetedge/proxy_client_ui:1.2.9
+    image: uminhonetedge/proxy_client_ui:1.2.10
     ports:
       - "3000:3000"
     networks:

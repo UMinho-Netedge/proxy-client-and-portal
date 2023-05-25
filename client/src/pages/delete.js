@@ -39,7 +39,7 @@ export const Delete = () => {
         setResponseData(JSON.stringify(outputText.data))
         console.log("OUTPUT TEXT: ", outputText.data);
         console.log("RESPONDED DATA: ", responseData);
-        setOutputText(outputText.data.status);
+        setOutputText(outputText.status);
     };
 
     return (
