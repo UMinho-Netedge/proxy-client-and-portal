@@ -33,8 +33,12 @@ export const Post_app_context = () => {
 
     const outputText = await axios.post(url, data, config);
 
-    setResponseData(JSON.stringify(outputText.data["body"]));
-    setOutputText(outputText.data["status"]);
+    console.log("OUTPUT TEXT ALL: ", outputText);
+
+    setResponseData(JSON.stringify(outputText.data));
+    console.log("OUTPUT TEXT: ", outputText.data);
+    console.log("RESPONDED DATA: ", responseData);
+    setOutputText(outputText.status);
   };
 
 
