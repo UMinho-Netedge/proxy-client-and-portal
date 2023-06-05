@@ -119,7 +119,10 @@ def def_context_id():
     
     app.logger.info(response_json)
 
-    return response.json(), response.status_code
+    return jsonify({
+        'status': response.status_code,
+        'body': response_json
+    })
 
 @app.route('/app_contexts/<contextId>', methods=['PUT'])
 def put_contexts(contextId):

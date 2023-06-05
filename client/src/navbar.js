@@ -8,7 +8,7 @@ export const Navbar = () => {
   const username = cookies.username;
   const access_token = cookies.access_token;
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
-  const url = `${process.env.REACT_APP_API_URL}/logout`;
+  const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}/logout`;
 
   const handleLogout = (event) => {
     console.debug('ACCESS_TOKEN: ',access_token)

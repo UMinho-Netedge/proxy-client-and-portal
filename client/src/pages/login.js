@@ -5,7 +5,10 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const [project, setProject] = useState('');
   //const project = "default_project"
-  const url = `${process.env.REACT_APP_API_URL}/login`;
+  const hostname = process.env.REACT_APP_DEVICE_APP_HOSTNAME;
+  const port = process.env.REACT_APP_DEVICE_APP_PORT;
+  const url = `http://${hostname}:${port}/login`;
+  console.log(url);
 
   const handleSubmit = (event) => {
     event.preventDefault();

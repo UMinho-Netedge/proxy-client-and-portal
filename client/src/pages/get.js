@@ -17,7 +17,7 @@ export const Get = () => {
   const [appSoftVersion, setAppSoftVersion] = useState("");
   const [vendorId, setVendorId] = useState("");
   const [serviceCont, setServiceCont] = useState("");
-  const url = `${process.env.REACT_APP_REQUESTS}/app_list`;
+  const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}/app_list`;
   const [cookies] = useCookies(['access_token']);
   const access_token = cookies.access_token;
 
@@ -57,7 +57,7 @@ export const Get = () => {
   return (
     <div className="get">
     <h2>Get App List</h2>
-      <p name="url">Sending to http://127.0.0.1:8080/app_list </p>
+      <p name="url">Sending to {url} </p>
       <div className="parameters">
         <button className='button_get' onClick={() => { handleClick(); handleToggle() }}>{buttonText}</button>
         {isOpen ? (

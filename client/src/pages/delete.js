@@ -14,6 +14,7 @@ export const Delete = () => {
     const [input, setInput] = useState("");
     const [cookies] = useCookies(['access_token']);
     const access_token = cookies.access_token;
+    const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}`;
     
 
     const handleChange = event => {
@@ -34,7 +35,7 @@ export const Delete = () => {
           }
         };
 
-        const outputText = await axios.delete(`${process.env.REACT_APP_REQUESTS}/app_contexts/${input}`, config);
+        const outputText = await axios.delete(`${url}/app_contexts/${input}`, config);
         console.log("OUTPUT TEXT ALL: ", outputText);
         setResponseData(JSON.stringify(outputText.data))
         console.log("OUTPUT TEXT: ", outputText.data);
@@ -46,7 +47,7 @@ export const Delete = () => {
       <div className="delete">
       <h2>Delete App Context</h2>
         <form onSubmit={handleDelete}>
-          <p name="url">Sending to http://127.0.0.1:8080/app_contexts/{input}</p>  
+          <p name="url">Sending to {url}/app_contexts/{input}</p>  
           <div className="column">
           <h4>Parameter</h4>
             <input placeholder="contextId" name="contextId" type="text" value={input} onChange={handleChange}/>    

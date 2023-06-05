@@ -14,6 +14,7 @@ export const Put = () => {
   const [input, setInput] = useState("");
   const [cookies] = useCookies(['access_token']);
   const access_token = cookies.access_token;
+  const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}`
 
   const handleChange = event => {
       setInput(event.target.value.trim());
@@ -34,7 +35,7 @@ export const Put = () => {
         }
       };
 
-      const outputText = await axios.put(`${process.env.REACT_APP_REQUESTS}/app_contexts/${input}`, data, config);
+      const outputText = await axios.put(`${url}/app_contexts/${input}`, data, config);
       setResponseData(JSON.stringify(outputText.data["body"]))
       setOutputText(outputText.data["status"]);
   };

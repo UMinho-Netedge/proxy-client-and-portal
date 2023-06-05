@@ -11,7 +11,7 @@ export const Post_app_context = () => {
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
-  const url = `${process.env.REACT_APP_REQUESTS}/app_contexts`
+  const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}/app_contexts`
 
   const [cookies] = useCookies(['access_token']);
   const access_token = cookies.access_token;
@@ -46,7 +46,7 @@ export const Post_app_context = () => {
     <div className="post">
       <h2>Post App Context</h2>
       <form onSubmit={handleSubmit}>
-        <p className="url">Sending to http://127.0.0.1:8080/app_contexts</p>   
+        <p className="url">Sending to {url}</p>   
         <h4>Request Body</h4>   
         <textarea type="text" name="body" placeholder="Insert the request body" />
         <div className="column">

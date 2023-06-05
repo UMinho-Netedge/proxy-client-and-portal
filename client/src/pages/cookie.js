@@ -15,7 +15,7 @@ function getCookie(name) {
 
 
 export function checkAccessToken() {
-    const url = `${process.env.REACT_APP_API_URL}/refresh`;
+    const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}/refresh`;
     const accessToken = getCookie('access_token');
     const refreshToken = getCookie('refresh_token');
   

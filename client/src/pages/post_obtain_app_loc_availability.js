@@ -11,7 +11,9 @@ export const Post_obtain_app_loc_availability = () => {
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
-  const url = `${process.env.REACT_APP_REQUESTS}/obtain_app_loc_availability`
+  
+  const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}/obtain_app_loc_availability`
+
   const [cookies] = useCookies(['access_token']);
   const access_token = cookies.access_token;
   
@@ -39,7 +41,7 @@ export const Post_obtain_app_loc_availability = () => {
     <div className="post">
     <h2>Post App Location Availability</h2>
     <form onSubmit={handleSubmit}>
-      <p name="url">Sending to http://127.0.0.1:8080/obtain_app_loc_availability</p>    
+      <p name="url">Sending to {url}</p>    
       <h4>Request Body</h4>  
       <textarea type="text" name="body" placeholder="Insert the request body" />
       <div className="column">

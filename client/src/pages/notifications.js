@@ -10,7 +10,7 @@ export const Notifications = () => {
     const [responseData, setResponseData] = useState("");
     const [responseTime, setResponseTime] = useState("");
     const [responseContextId, setResponseContextId] = useState("");
-    const url = `${process.env.REACT_APP_REQUESTS}/notifications`
+    const url = `http://${process.env.REACT_APP_DEVICE_APP_HOSTNAME}:${process.env.REACT_APP_DEVICE_APP_PORT}/notifications`;
 
     useEffect(() => {
         axios.get(url)

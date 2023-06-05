@@ -23,13 +23,13 @@ services:
     container_name: client_ui
     restart: always
     environment:
-      REACT_APP_API_URL: "http://127.0.0.1:5005"
-      REACT_APP_REQUESTS: "http://127.0.0.1:5005"
+      REACT_APP_DEVICE_APP_HOSTNAME: "127.0.0.1"
+      REACT_APP_DEVICE_APP_PORT: "5005"
     depends_on: 
       - client
     links:
       - client
-    image: uminhonetedge/proxy_client_ui:1.2.10
+    image: uminhonetedge/proxy_client_ui:1.2.11
     ports:
       - "3000:3000"
     networks:
