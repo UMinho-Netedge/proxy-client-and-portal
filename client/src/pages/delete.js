@@ -37,7 +37,7 @@ export const Delete = () => {
 
         const outputText = await axios.delete(`${url}/app_contexts/${input}`, config);
         console.log("OUTPUT TEXT ALL: ", outputText);
-        setResponseData(JSON.stringify(outputText.data))
+        setResponseData(JSON.stringify(outputText.data, null, 2))
         console.log("OUTPUT TEXT: ", outputText.data);
         console.log("RESPONDED DATA: ", responseData);
         setOutputText(outputText.status);

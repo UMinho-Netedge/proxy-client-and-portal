@@ -16,7 +16,7 @@ export const Notifications = () => {
         axios.get(url)
             .then(response => {
             setOutputText(response.data[0]["status"]);
-            setResponseData(JSON.stringify(response.data[0]["body"]));
+            setResponseData(JSON.stringify(response.data[0]["body"], null, 2));
             setResponseTime(response.data[0]["time"])
             setResponseContextId(response.data[1])
             });

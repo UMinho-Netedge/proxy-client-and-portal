@@ -36,7 +36,7 @@ export const Put = () => {
       };
 
       const outputText = await axios.put(`${url}/app_contexts/${input}`, data, config);
-      setResponseData(JSON.stringify(outputText.data["body"]))
+      setResponseData(JSON.stringify(outputText.data["body"], null, 2))
       setOutputText(outputText.data["status"]);
   };
 
@@ -44,7 +44,7 @@ export const Put = () => {
       <div className="put">
       <h2>Put App Context</h2>
         <form onSubmit={handleSubmit}>
-          <p name="url">Sending to http://127.0.0.1:8080/app_contexts/{input}</p>  
+          <p name="url">Sending to {url}/app_contexts/{input}</p>  
           <div className="column">
           <h4>Parameter</h4>
             <input placeholder="contextId" name="contextId" type="text" value={input} onChange={handleChange}/>    

@@ -35,7 +35,7 @@ export const Post_app_context = () => {
 
     console.log("OUTPUT TEXT ALL: ", outputText);
 
-    setResponseData(JSON.stringify(outputText.data));
+    setResponseData(JSON.stringify(outputText.data, null, 2));
     console.log("OUTPUT TEXT: ", outputText.data);
     console.log("RESPONDED DATA: ", responseData);
     setOutputText(outputText.status);

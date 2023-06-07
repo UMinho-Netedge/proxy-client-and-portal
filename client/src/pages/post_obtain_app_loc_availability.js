@@ -33,7 +33,7 @@ export const Post_obtain_app_loc_availability = () => {
     };
 
     const outputText = await axios.post(url, data, config);
-    setResponseData(JSON.stringify(outputText.data["body"]));
+    setResponseData(JSON.stringify(outputText.data["body"]), null, 2);
     setOutputText(outputText.data["status"]);
   };
 

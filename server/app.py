@@ -31,7 +31,17 @@ db = client["ualcmp-client"]
 Context = db["Contexts"]
 notifications = db['notifications']
 
-CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
+# CORS(app, origins='*', send_wildcard=True, support_credentials=True, expose_headers='Authorization', simple_headers=True)
+CORS(app)
+
+@app.before_request 
+def option_before_request(): 
+    if request.method == "OPTIONS": 
+        response = jsonify({}) 
+        response.headers.add("Access-Control-Allow-Origin", "*") 
+        response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS") 
+        response.headers.add("Access-Control-Allow-Headers", "*") 
+        return response 
     
 @app.route('/ping', methods=['GET'])
 def test_connection():
@@ -119,10 +129,10 @@ def def_context_id():
     
     app.logger.info(response_json)
 
-    return jsonify({
-        'status': response.status_code,
-        'body': response_json
-    })
+    if '_id' in response_json.keys():
+        response_json.pop('_id')
+
+    return response_json, response.status_code
 
 @app.route('/app_contexts/<contextId>', methods=['PUT'])
 def put_contexts(contextId):
