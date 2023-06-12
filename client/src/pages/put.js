@@ -35,9 +35,21 @@ export const Put = () => {
         }
       };
 
+      /*
       const outputText = await axios.put(`${url}/app_contexts/${input}`, data, config);
       setResponseData(JSON.stringify(outputText.data["body"], null, 2))
       setOutputText(outputText.data["status"]);
+      */
+     
+      axios.put(`${url}/app_contexts/${input}`, data, config)
+      .then(response => {
+        setResponseData(JSON.stringify(response.data["body"], null, 2));
+        setOutputText(response.data["status"]);
+      })
+      .catch(error => {
+        setResponseData(JSON.stringify(error.response.data["body"], null, 2));
+        setOutputText(error.response.data["status"]);
+      })
   };
 
     return (

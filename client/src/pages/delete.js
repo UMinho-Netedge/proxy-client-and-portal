@@ -35,12 +35,29 @@ export const Delete = () => {
           }
         };
 
+        /*
         const outputText = await axios.delete(`${url}/app_contexts/${input}`, config);
         console.log("OUTPUT TEXT ALL: ", outputText);
         setResponseData(JSON.stringify(outputText.data, null, 2))
         console.log("OUTPUT TEXT: ", outputText.data);
         console.log("RESPONDED DATA: ", responseData);
         setOutputText(outputText.status);
+        */
+       
+        axios.delete(`${url}/app_contexts/${input}`, config)
+        .then(response => {
+          //console.info("RESPONSE: ", response);
+          setResponseData(JSON.stringify(response.data, null, 2));
+          //console.info("RESPONDED DATA: ", responseData);
+          setOutputText(response.status);
+        })
+        .catch(error => {
+          //console.info("ERROR: ", error);
+          setResponseData(JSON.stringify(error.response.data, null, 2));
+          //console.info("RESPONDED DATA: ", responseData);
+          setOutputText(error.response.status);
+        })
+
     };
 
     return (
