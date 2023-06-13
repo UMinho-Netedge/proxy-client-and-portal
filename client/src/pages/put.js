@@ -8,6 +8,7 @@ export const Put = () => {
 
   myCookies.checkAccessToken();
 
+  const [isLoading, setIsLoading] = useState(false); // new loading state
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
@@ -40,6 +41,7 @@ export const Put = () => {
       setResponseData(JSON.stringify(outputText.data["body"], null, 2))
       setOutputText(outputText.data["status"]);
       */
+      setIsLoading(true); // set loading state to true before making the request
      
       axios.put(`${url}/app_contexts/${input}`, data, config)
       .then(response => {
@@ -50,11 +52,15 @@ export const Put = () => {
         setResponseData(JSON.stringify(error.response.data["body"], null, 2));
         setOutputText(error.response.data["status"]);
       })
+      .finally(() => {
+        setIsLoading(false); // set loading state to false after the request is completed
+      })
   };
 
     return (
       <div className="put">
       <h2>Put App Context</h2>
+      {isLoading && <div className="spinner"></div>} {/* Render spinner when loading */}
         <form onSubmit={handleSubmit}>
           <p name="url">Sending to {url}/app_contexts/{input}</p>  
           <div className="column">

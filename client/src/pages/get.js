@@ -7,6 +7,7 @@ export const Get = () => {
 
   myCookies.checkAccessToken();
 
+  const [isLoading, setIsLoading] = useState(false); // new loading state
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -47,16 +48,26 @@ export const Get = () => {
       }
     }
 
+    setIsLoading(true); // set loading state to true before making the request
+
     axios.get(url, { params: parValue, headers: {'Authorization': 'Bearer ' + access_token} })
       .then(response => {
         setResponseData(JSON.stringify(response.data["body"], null, 2));
         setOutputText(response.data["status"]);
+      })
+      .catch(error => {
+        setResponseData(JSON.stringify(error.response.data, null, 2));
+        setOutputText(error.response.status);
+      })
+      .finally(() => {
+        setIsLoading(false); // set loading state to false after the request is completed
       })
   }
 
   return (
     <div className="get">
     <h2>Get App List</h2>
+    {isLoading && <div className="spinner"></div>} {/* Render spinner when loading */}
       <p name="url">Sending to {url} </p>
       <div className="parameters">
         <button className='button_get' onClick={() => { handleClick(); handleToggle() }}>{buttonText}</button>

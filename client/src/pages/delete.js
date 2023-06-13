@@ -8,6 +8,7 @@ export const Delete = () => {
 
     myCookies.checkAccessToken();   
   
+    const [isLoading, setIsLoading] = useState(false); // new loading state
     const [responseData, setResponseData] = useState("");
     const [outputText, setOutputText] = useOutputTextState();
     const [showOutput, setShowOutput] = useShowOutputState();
@@ -43,7 +44,9 @@ export const Delete = () => {
         console.log("RESPONDED DATA: ", responseData);
         setOutputText(outputText.status);
         */
-       
+        
+        setIsLoading(true); // set loading state to true before making the request
+
         axios.delete(`${url}/app_contexts/${input}`, config)
         .then(response => {
           //console.info("RESPONSE: ", response);
@@ -57,12 +60,16 @@ export const Delete = () => {
           //console.info("RESPONDED DATA: ", responseData);
           setOutputText(error.response.status);
         })
+        .finally(() => {
+          setIsLoading(false); // set loading state to false after the request is completed
+        })
 
     };
 
     return (
       <div className="delete">
       <h2>Delete App Context</h2>
+      {isLoading && <div className="spinner"></div>} {/* Render spinner when loading */}
         <form onSubmit={handleDelete}>
           <p name="url">Sending to {url}/app_contexts/{input}</p>  
           <div className="column">

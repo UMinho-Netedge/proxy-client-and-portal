@@ -8,6 +8,7 @@ export const Post_app_context = () => {
 
   myCookies.checkAccessToken();
 
+  const [isLoading, setIsLoading] = useState(false); // new loading state
   const [responseData, setResponseData] = useState("");
   const [outputText, setOutputText] = useOutputTextState();
   const [showOutput, setShowOutput] = useShowOutputState();
@@ -31,36 +32,26 @@ export const Post_app_context = () => {
       }
     };
 
-    /*
-    const outputText = await axios.post(url, data, config);
-
-    console.info("OUTPUT TEXT ALL: ", outputText);
-
-    setResponseData(JSON.stringify(outputText.data, null, 2));
-    console.log("OUTPUT TEXT: ", outputText.data);
-    console.log("RESPONDED DATA: ", responseData);
-    setOutputText(outputText.status);
-    */
+    setIsLoading(true); // set loading state to true before making the request
 
     axios.post(url, data, config)
     .then(response => {
-      //console.info("RESPONSE: ", response);
       setResponseData(JSON.stringify(response.data, null, 2));
-      //console.info("RESPONDED DATA: ", responseData);
       setOutputText(response.status);
     })
     .catch(error => {
-      //console.info("ERROR: ", error);
       setResponseData(JSON.stringify(error.response.data, null, 2));
-      //console.info("RESPONDED DATA: ", responseData);
       setOutputText(error.response.status);
     })
+    .finally(() => {
+      setIsLoading(false); // set loading state to false after the request is completed
+    })
   };
-
 
   return (
     <div className="post">
       <h2>Post App Context</h2>
+      {isLoading && <div className="spinner"></div>} {/* Render spinner when loading */}
       <form onSubmit={handleSubmit}>
         <p className="url">Sending to {url}</p>   
         <h4>Request Body</h4>   
@@ -78,4 +69,3 @@ export const Post_app_context = () => {
     </div>
   );
 }
-
