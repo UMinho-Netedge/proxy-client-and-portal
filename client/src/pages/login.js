@@ -28,11 +28,11 @@ export const Login = () => {
         // get refresh token
         console.debug("ACCESS:TOKEN" + data.refresh_token);
         console.debug("REFRESH_TOKEN: " + data.refresh_token);
-
-        document.cookie = `access_token=${data.access_token}; expires=${data.expires} path=/;`;
+        let expiresIn = new Date(data.expires * 1000);
+        document.cookie = `access_token=${data.access_token}; expires=${expiresIn}; path=/;`;
         document.cookie = `refresh_token=${data.refresh_token}; path=/;`;
         document.cookie = `username=${username}; path=/;`;
-        window.location.href = "/"
+        window.location.href = "/"        
       })
       .catch((error) => {
         document.cookie = `username=${username}; path=/;`;

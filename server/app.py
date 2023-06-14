@@ -113,6 +113,8 @@ def def_app_list():
 @app.route('/app_contexts', methods=['POST'])
 def def_context_id():
     body = request.get_json()
+    if 'vendorSpecificExt' in body.keys():
+        body.pop('vendorSpecificExt')
     body['associateDevAppId'] = associateDevAppId
     auth_header = request.headers.get('Authorization')
     headers = {'Authorization' : auth_header}
